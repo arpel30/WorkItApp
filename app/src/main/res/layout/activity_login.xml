@@ -8,15 +8,17 @@
 
     <ImageView
         android:id="@+id/login_IMG_icon"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:src="@drawable/logo_white"/>
 
     <LinearLayout
+        android:layout_alignLeft="@+id/login_IMG_icon"
+        android:layout_alignRight="@+id/login_IMG_icon"
         android:layout_centerHorizontal="true"
-        android:layout_width="350dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_IMG_icon"
         android:orientation="vertical">
@@ -24,28 +26,43 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign In"
-            android:textSize="40dp"
+            android:text="@string/SIGN_IN"
+            android:textSize="30sp"
             android:layout_gravity="center"
-            android:gravity="center"
+            android:gravity="start"
             android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="@color/DARK_GREY"
+            />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:text="@string/WELCOME"
+            android:textSize="20sp"
+            android:autoSizeMinTextSize="10dp"
+            android:autoSizeMaxTextSize="20dp"
+            android:autoSizeTextType="uniform"
+            android:layout_gravity="center"
+            android:gravity="start"
+            android:textAllCaps="false"
+            android:textColor="@color/LIGHT_GREY"
             />
 
         <com.simform.customcomponent.SSCustomEdittextOutlinedBorder
             android:id="@+id/login_EDT_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:inputType="textMultiLine|textCapSentences"
             app:custom_component_editText_hint="@string/USER_NAME_HINT"
             app:custom_component_maxline="1"
             app:custom_component_minline="1"
             app:custom_component_maxLength="25"
             app:custom_component_title = "@string/USER_NAME"
-            app:custom_component_title_color="@color/color_brownish_grey_two"
+            app:custom_component_title_color="@color/DARK_RED"
             app:custom_component_title_error_color="@color/color_error"
-            app:custom_component_border_color="@color/color_warm_grey"
+            app:custom_component_border_color="@color/DARK_RED"
             app:custom_component_border_error_color="@color/color_error"
             />
 
@@ -53,20 +70,43 @@
             android:id="@+id/login_EDT_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:inputType="textPassword"
             app:custom_component_editText_hint="@string/PASSWORD_HINT"
             app:custom_component_maxline="1"
             app:custom_component_minline="1"
             app:custom_component_maxLength="25"
             app:custom_component_title = "@string/PASSWORD"
-            app:custom_component_title_color="@color/color_brownish_grey_two"
+            app:custom_component_title_color="@color/DARK_RED"
             app:custom_component_title_error_color="@color/color_error"
-            app:custom_component_border_color="@color/color_warm_grey"
+            app:custom_component_border_color="@color/DARK_RED"
             app:custom_component_border_error_color="@color/color_error"
             />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/DARK_RED"
+            android:textColor="@color/white"
+            android:text="@string/SIGN_IN"
+            android:textSize="30sp"
+            android:layout_marginTop="20dp"
+            android:textAllCaps="false"/>
+
     </LinearLayout>
 
 
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/SEND_REQUEST"
+        android:textColor="@color/DARK_RED"
+        android:textSize="20sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:textStyle="bold"
+        android:layout_marginBottom="50dp"
+        />
 </RelativeLayout>
