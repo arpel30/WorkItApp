@@ -42,4 +42,7 @@ dependencies {
 
     // Gson (convert Java Objects into their JSON representation)
     implementation 'com.google.code.gson:gson:2.8.6'
+
+    // TextField for input
+    implementation 'com.github.simformsolutions:SSCustomEditTextOutLineBorder:1.0.8'
 }

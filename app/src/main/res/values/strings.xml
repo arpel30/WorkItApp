@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WorkItApp</string>
+    <string name="USER_NAME">User Name</string>
+    <string name="PASSWORD">Password</string>
+    <string name="USER_NAME_HINT">Your User Name</string>
+    <string name="PASSWORD_HINT">Your Password</string>
 </resources>
