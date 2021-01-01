@@ -2,9 +2,14 @@
     <string name="app_name">WorkItApp</string>
     <string name="USER_NAME">User Name</string>
     <string name="PASSWORD">Password</string>
-    <string name="USER_NAME_HINT">Your User Name</string>
-    <string name="PASSWORD_HINT">Your Password</string>
+    <string name="USER_NAME_HINT">User Name</string>
+    <string name="PASSWORD_HINT">Password</string>
+    <string name="EMAIL_HINT">Email</string>
+    <string name="DIVISION_HINT">Requested Division ID</string>
     <string name="SIGN_IN">Sign In</string>
     <string name="SEND_REQUEST">Request HR To Join</string>
     <string name="WELCOME">Hi there! Nice to see you again.</string>
+    <string name="REMEMBER">Remember Me</string>
+    <string name="SEND">Send</string>
+    <string name="HAVE_ACCOUNT">Have an Account?  </string>
 </resources>

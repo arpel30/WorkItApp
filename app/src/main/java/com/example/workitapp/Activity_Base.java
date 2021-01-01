@@ -1,5 +1,6 @@
 package com.example.workitapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -10,12 +11,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.workitapp.MyScreenUtils;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 // Base Activity for all Activities
 public abstract class Activity_Base extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        getWindow().setStatusBarColor(Color.parseColor("#990F02"));
+//        getWindow().setNavigationBarColor(Color.parseColor("#990F02"));
         MyScreenUtils.hideSystemUI(this);
     }
 
@@ -23,7 +30,7 @@ public abstract class Activity_Base extends AppCompatActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
-            MyScreenUtils.hideSystemUI(this);
+//            MyScreenUtils.hideSystemUI(this);
         }
     }
 
@@ -46,6 +53,31 @@ public abstract class Activity_Base extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    private static String bytesToHex(byte[] hash) {
+        StringBuilder hexString = new StringBuilder(2 * hash.length);
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if(hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+
+    protected String sha256(String password){
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedhash = digest.digest(
+                    password.getBytes(StandardCharsets.UTF_8));
+            return bytesToHex(encodedhash);
+        } catch (NoSuchAlgorithmException e) {
+            return password;
+        }
+
     }
 
     public void setImage(int id, ImageView view) {
