@@ -12,4 +12,12 @@
     <string name="REMEMBER">Remember Me</string>
     <string name="SEND">Send</string>
     <string name="HAVE_ACCOUNT">Have an Account?  </string>
+    <string name="HOME">Home</string>
+    <string name="REQUESTS">Requests</string>
+    <string name="ASSIGNMENTS">Assignments</string>
+    <string name="STATISTICS">Statistics</string>
+    <string name="PROFILE">Profile</string>
+    <string name="LOGOUT">Log Out</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

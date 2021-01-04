@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/menu_ITM_home"
+            android:icon="@drawable/home_icon"
+            android:title="@string/HOME"
+            />
+        <item
+            android:id="@+id/menu_ITM_stats"
+            android:icon="@drawable/stats_icon"
+            android:title="@string/STATISTICS" />
+        <item
+            android:id="@+id/menu_ITM_assign"
+            android:icon="@drawable/assignment_icon"
+            android:title="@string/ASSIGNMENTS" />
+        <item
+            android:id="@+id/menu_ITM_requests"
+            android:icon="@drawable/requests_icon"
+            android:title="@string/REQUESTS" />
+    </group>
+    <group android:checkableBehavior="single">
+
+
+    </group>
+    <item android:title="@string/PROFILE">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_ITM_login"
+                    android:icon="@drawable/profile_icon"
+                    android:title="@string/PROFILE" />
+                <item
+                    android:id="@+id/menu_ITM_logout"
+                    android:icon="@drawable/logout_icon"
+                    android:title="@string/LOGOUT" />
+            </group>
+        </menu>
+
+    </item>
+</menu>
