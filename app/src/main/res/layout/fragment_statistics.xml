@@ -5,6 +5,7 @@
     android:background="@color/LIGHT_GREY">
 
     <TextView
+        android:id="@+id/stats_LBL_uid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Stats boy"

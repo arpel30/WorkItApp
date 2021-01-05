@@ -158,8 +158,6 @@
             android:gravity="end"
             android:text="@string/HAVE_ACCOUNT"
             android:textSize="20sp"
-            android:clickable="true"
-            android:focusable="true"
             android:background="?attr/selectableItemBackground"
             android:textStyle="bold"
             android:layout_marginBottom="20dp"

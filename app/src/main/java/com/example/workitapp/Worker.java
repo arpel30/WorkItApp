@@ -1,39 +1,24 @@
 package com.example.workitapp;
 
 public class Worker {
-    private String workerID;
     private String name;
     private String email;
     private String password;
-    private String divisionID;
+    private int divisionID;
     private String imgUrl;
     private boolean isAccepted;
+
 
     public Worker() {
     }
 
-    public Worker(String name, String email, String password, String divisionID) {
+    public Worker(String name, String email, String password, int divisionID) {
         this.name = name;
         this.email = email;
-        this.password = password;
         this.divisionID = divisionID;
-        this.imgUrl = "default";
-    }
-
-    public boolean isAccepted() {
-        return isAccepted;
-    }
-
-    public void setAccepted(boolean accepted) {
-        isAccepted = accepted;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+        this.isAccepted = false;
+        this.password = password;
     }
 
     public String getPassword() {
@@ -44,35 +29,43 @@ public class Worker {
         this.password = password;
     }
 
-    public String getDivisionID() {
-        return divisionID;
-    }
-
-    public void setDivisionID(String divisionID) {
-        this.divisionID = divisionID;
-    }
-
-    public void setWorkerID(String workerID) {
-        this.workerID = workerID;
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getWorkerID() {
-        return workerID;
+    public int getDivisionID() {
+        return divisionID;
     }
 
-    public String getName() {
-        return name;
+    public void setDivisionID(int divisionID) {
+        this.divisionID = divisionID;
     }
 
-    public String getEmail() {
-        return email;
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public boolean isAccepted() {
+        return isAccepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        isAccepted = accepted;
     }
 }

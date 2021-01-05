@@ -31,20 +31,32 @@ public class Activity_Login extends Activity_Base {
 
     private FirebaseAuth auth;
     private DatabaseReference ref;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        rememberedCheck();
+
         findViews();
         initViews();
+    }
+
+    private void rememberedCheck() {
+        if(MySPV.getInstance().getBool(Constants.REMEMBER)) {
+            Intent i = new Intent(Activity_Login.this, Activity_Main.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            Log.d("aaa", "Log - rememberd.");
+            startActivity(i);
+            finish();
+        }
     }
 
     private void login() {
         String email = login_TIL_email.getEditText().getText().toString();
         String password = sha256(login_TIL_password.getEditText().getText().toString());
-        Log.d("aaa", "pass = " + password);
         if (TextUtils.isEmpty(password) || TextUtils.isEmpty(email)) {
             Toast.makeText(Activity_Login.this, "Please Fill All Fields", Toast.LENGTH_SHORT).show();
         } else {
@@ -53,17 +65,31 @@ public class Activity_Login extends Activity_Base {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                clearText();
-                                Toast.makeText(Activity_Login.this, "Login Successfully.", Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(Activity_Login.this, Activity_Main.class);
-                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(i);
-                                finish();
+                                successfulLogin();
                             } else {
                                 Toast.makeText(Activity_Login.this, "Login Failed.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
+        }
+    }
+
+    private void successfulLogin() {
+        saveRememberStatus();
+        clearText();
+        Toast.makeText(Activity_Login.this, "Login Successfully.", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(Activity_Login.this, Activity_Main.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        Log.d("aaa", "Log - logged in.");
+        startActivity(i);
+        finish();
+    }
+
+    private void saveRememberStatus() {
+        if(login_CBX_remember.isChecked()){
+            MySPV.getInstance().putBool(Constants.REMEMBER, true);
+            MySPV.getInstance().putString(Constants.UID, FirebaseAuth.getInstance().getCurrentUser().getUid());
+            Log.d("aaa", "log - "+FirebaseAuth.getInstance().getCurrentUser().getUid());
         }
     }
 
@@ -104,5 +130,6 @@ public class Activity_Login extends Activity_Base {
 
 
     public void requestToast(View view) {
+        Toast.makeText(getBaseContext(), "Request has been sent", Toast.LENGTH_SHORT).show();
     }
 }

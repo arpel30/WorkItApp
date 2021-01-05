@@ -5,12 +5,16 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Activity_Main extends Activity_Base implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -25,9 +29,10 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         findViews();
         setSupportActionBar(main_TLB_toolbar);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         // hide or show items
         Menu menu = main_NAV_navigation.getMenu();
         menu.findItem(R.id.menu_ITM_login).setVisible(false);
@@ -77,6 +82,7 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
                 getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Requests()).commit();
                 break;
             case R.id.menu_ITM_logout:
+                signOut();
                 break;
             case R.id.menu_ITM_login:
                 break;
@@ -84,5 +90,20 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         }
         main_DRL_drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void signOut() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        MySPV.getInstance().putBool(Constants.REMEMBER,false);
+        Intent i = new Intent(Activity_Main.this, Activity_Login.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+        finish();
+//        if(user != null){
+//            openApp();
+//        }else{
+//            login();
+//        }
     }
 }
