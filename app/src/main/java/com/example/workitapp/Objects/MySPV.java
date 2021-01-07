@@ -1,7 +1,9 @@
-package com.example.workitapp;
+package com.example.workitapp.Objects;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.example.workitapp.More.Constants;
 
 public class MySPV {
     private static MySPV instance;

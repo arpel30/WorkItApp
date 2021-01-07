@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity_Login">
+    tools:context=".Activities.Activity_Login">
 
     <ImageView
         android:id="@+id/login_IMG_icon"

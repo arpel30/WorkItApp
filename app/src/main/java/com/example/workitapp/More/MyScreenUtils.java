@@ -1,4 +1,4 @@
-package com.example.workitapp;
+package com.example.workitapp.More;
 
 import android.app.Activity;
 import android.os.Build;
@@ -8,6 +8,8 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import com.example.workitapp.R;
 
 public class MyScreenUtils {
     // Full screen, no buttons bar
@@ -39,7 +41,7 @@ public class MyScreenUtils {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
 // finally change the color
-        window.setStatusBarColor(ContextCompat.getColor(activity,R.color.DARK_RED));
+        window.setStatusBarColor(ContextCompat.getColor(activity, R.color.DARK_RED));
         window.setNavigationBarColor(ContextCompat.getColor(activity,R.color.DARK_RED));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             window.setNavigationBarDividerColor(ContextCompat.getColor(activity,R.color.DARK_RED));

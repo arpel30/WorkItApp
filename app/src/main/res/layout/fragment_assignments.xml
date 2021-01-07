@@ -4,13 +4,10 @@
     android:layout_height="match_parent"
     android:background="@color/color_brownish_grey_two">
 
-    <TextView
-        android:id="@+id/assign_LBL_uid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Assign boy"
-        android:layout_centerInParent="true"
-        android:textSize="50sp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_LST_names"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
 </RelativeLayout>

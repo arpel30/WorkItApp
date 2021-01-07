@@ -1,6 +1,5 @@
-package com.example.workitapp;
+package com.example.workitapp.Activities;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -9,7 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.workitapp.MyScreenUtils;
+import com.example.workitapp.More.MyScreenUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

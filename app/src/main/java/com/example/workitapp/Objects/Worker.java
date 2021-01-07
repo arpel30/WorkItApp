@@ -1,4 +1,4 @@
-package com.example.workitapp;
+package com.example.workitapp.Objects;
 
 public class Worker {
     private String name;
@@ -7,6 +7,7 @@ public class Worker {
     private int divisionID;
     private String imgUrl;
     private boolean isAccepted;
+    Assignment[] assignments;
 
 
     public Worker() {
@@ -67,5 +68,13 @@ public class Worker {
 
     public void setAccepted(boolean accepted) {
         isAccepted = accepted;
+    }
+
+    public Assignment[] getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(Assignment[] assignments) {
+        this.assignments = assignments;
     }
 }

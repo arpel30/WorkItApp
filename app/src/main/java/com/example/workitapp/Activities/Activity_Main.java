@@ -1,4 +1,4 @@
-package com.example.workitapp;
+package com.example.workitapp.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -7,11 +7,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.example.workitapp.More.Constants;
+import com.example.workitapp.Fragments.Fragment_Assignments;
+import com.example.workitapp.Fragments.Fragment_Requests;
+import com.example.workitapp.Fragments.Fragment_Statistics;
+import com.example.workitapp.Objects.MySPV;
+import com.example.workitapp.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

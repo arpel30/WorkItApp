@@ -1,8 +1,8 @@
-package com.example.workitapp;
+package com.example.workitapp.More;
 
 import android.app.Application;
 
-import com.example.workitapp.MySPV;
+import com.example.workitapp.Objects.MySPV;
 
 public class App  extends Application {
     @Override

@@ -1,4 +1,4 @@
-package com.example.workitapp;
+package com.example.workitapp.More;
 
 public class Constants {
 
