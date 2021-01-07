@@ -12,111 +12,33 @@
     >
 
     <RelativeLayout
+        android:id="@+id/assignItemW_LAY_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        tools:context=".MainActivity">
+        tools:context=".Activities.Activity_Main">
 
-        <RelativeLayout
-            android:id="@+id/main_LAY_cover"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/movie_IMG_cover"
-                android:layout_width="120dp"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/arrow_left_icon" />
-
-            <androidx.appcompat.widget.AppCompatRatingBar
-                style="@style/Widget.AppCompat.RatingBar.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/movie_IMG_cover"
-                android:layout_centerHorizontal="true"
-                android:background="#61FFFFFF"
-                android:rating="4" />
-
-        </RelativeLayout>
+       <TextView
+           android:id="@+id/assignItemW_LBL_title"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Make Me Coffee"
+           android:textSize="30sp"
+           android:textColor="@color/black"
+           android:layout_centerHorizontal="true"
+           />
 
         <TextView
-            android:id="@+id/movie_LBL_name"
+            android:id="@+id/assignItemW_LBL_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:layout_toStartOf="@id/movie_IMG_star"
-            android:layout_toEndOf="@id/main_LAY_cover"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Movie Name"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/movie_LBL_year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/movie_LBL_name"
-            android:layout_alignStart="@id/movie_LBL_name"
-            android:layout_marginTop="4dp"
-            android:text="Year"
+            android:text="8/1/2021"
+            android:textSize="20sp"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/assignItemW_LBL_title"
+            />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/movie_IMG_star"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/logout_icon"
-            app:shapeAppearanceOverlay="@style/AppTheme" />
-
-        <TextView
-            android:id="@+id/movie_LBL_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/movie_IMG_star"
-            android:layout_alignStart="@id/movie_LBL_name"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="12dp"
-            android:ellipsize="end"
-            android:maxLines="5"
-            android:text="Content When a pilot crashes and tells of conflict in the outside world, Diana, an Amazonian warrior in training, leaves home to fight a war, discovering her full powers and true destiny. When a pilot crashes and tells of conflict in the outside world, Diana, an Amazonian warrior in training, leaves home to fight a war, discovering her full powers and true destiny. When a pilot crashes and tells of conflict in the outside world, Diana, an Amazonian warrior in training, leaves home to fight a war, discovering her full powers and true destiny. When a pilot crashes and tells of conflict in the outside world, Diana, an Amazonian warrior in training, leaves home to fight a war, discovering her full powers and true destiny."
-            android:textColor="@color/black"
-            android:textSize="12sp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/main_BTN_readMore"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/movie_LBL_content"
-            android:layout_alignEnd="@id/movie_LBL_content"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:minWidth="10dp"
-            android:minHeight="10dp"
-            android:text="Read More"
-            android:textColor="@color/black"
-            android:textSize="10sp" />
-
-        <TextView
-            android:id="@+id/movie_LBL_actors"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@id/movie_LBL_name"
-            android:layout_alignBottom="@id/main_LAY_cover"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="12dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Actor1, Actor2, Actor3"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
 
     </RelativeLayout>
 

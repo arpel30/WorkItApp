@@ -2,10 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_brownish_grey_two">
+    android:background="@color/DARK_RED">
+
+    <TextView
+        android:id="@+id/assign_LBL_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40dp"
+        android:textColor="@color/black"
+        android:text="Your Assignments"
+        android:textAllCaps="false"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/main_LST_names"
+        android:layout_below="@+id/assign_LBL_title"
+        android:id="@+id/assign_LST_assignments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

@@ -1,19 +1,25 @@
 package com.example.workitapp.Objects;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Assignment {
     String title;
-    Date dueTo;
+    SimpleDateFormat format;
+    LocalDate dueTo;
     String description;
 
-    public Assignment() {
-    }
-
-    public Assignment(String title, Date dueTo, String description) {
+    public Assignment(String title, LocalDate  dueTo, String description) {
         this.title = title;
+        this.format = new SimpleDateFormat("dd/MM/yy");;
         this.dueTo = dueTo;
         this.description = description;
+    }
+
+    public SimpleDateFormat getFormat() {
+        return format;
     }
 
     public String getTitle() {
@@ -24,11 +30,11 @@ public class Assignment {
         this.title = title;
     }
 
-    public Date getDueTo() {
+    public LocalDate  getDueTo() {
         return dueTo;
     }
 
-    public void setDueTo(Date dueTo) {
+    public void setDueTo(LocalDate dueTo) {
         this.dueTo = dueTo;
     }
 
