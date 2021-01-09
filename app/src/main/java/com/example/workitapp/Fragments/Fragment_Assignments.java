@@ -1,6 +1,9 @@
 package com.example.workitapp.Fragments;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +39,8 @@ public class Fragment_Assignments extends MyFragment {
     private View view;
     private Context context;
 
+    private Dialog mDialog;
+
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("Workers");
     private Worker w;
@@ -63,6 +68,9 @@ public class Fragment_Assignments extends MyFragment {
     private void initViews() {
         assignments = AssignmentMockDB.generateMovies();
         adapter_movie = new Adapter_AssignmentW(context, assignments);
+
+        mDialog = new Dialog(context);
+
         adapter_movie.setClickListener(new Adapter_AssignmentW.MyItemClickListener() {
             @Override
             public void onItemClicked(View view, int position) {
@@ -81,11 +89,16 @@ public class Fragment_Assignments extends MyFragment {
     }
 
     private void openInfo(Assignment assignment) {
-        new AlertDialog.Builder(context)
-                .setTitle(assignment.getTitle() +" : " + assignment.getDueTo().toString())
-                .setMessage(assignment.getDescription())
-                .setPositiveButton("Close", null)
-                .show();
+//        new AlertDialog.Builder(context)
+//                .setTitle(assignment.getTitle() +" : " + assignment.getDueTo().toString())
+//                .setMessage(assignment.getDescription())
+//                .setPositiveButton("Close", null)
+//                .show();
+
+        mDialog.setContentView(R.layout.popup_assignment_w);
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+        mDialog.show();
+
     }
 
     private void findViews() {

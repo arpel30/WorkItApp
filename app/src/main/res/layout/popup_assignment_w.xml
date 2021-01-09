@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="350dp"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/popup_bg">
+
+<!--    <ImageView-->
+<!--        android:layout_width="150dp"-->
+<!--        android:layout_height="150dp"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginTop="18dp"-->
+<!--        />-->
+
+    <TextView
+        android:id="@+id/popupAW_LBL_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="TITLE"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:id="@+id/popupAW_LBL_description"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="description description description description description description description description description description description"
+        android:textSize="20sp"
+        android:gravity="start"
+        android:autoSizeTextType="uniform"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
+
+    <TextView
+        android:id="@+id/popupAW_LBL_date"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="20/2/2021"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_marginTop="18dp"
+        />
+    <LinearLayout
+        android:showDividers="middle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        >
+
+        <Button
+            android:autoSizeTextType="uniform"
+            android:id="@+id/popupAW_BTN_done"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Done"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/LIGHT_GREY"
+            android:textSize="40sp"
+            android:textColor="@color/black"
+            />
+
+        <Button
+            android:autoSizeTextType="uniform"
+            android:id="@+id/popupAW_BTN_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/DARK_GREY"
+            android:textSize="40sp"
+            android:textColor="@color/white"
+            />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
