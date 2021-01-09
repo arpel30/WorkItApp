@@ -18,21 +18,31 @@
         android:id="@+id/popupAW_LBL_title"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
+        android:lines="1"
         android:text="TITLE"
+        android:layout_margin="5dp"
         android:textSize="30sp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="40dp"
         android:gravity="center"
         android:layout_marginTop="10dp"
         android:textColor="@color/black"
         />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/DARK_RED" />
+
     <TextView
         android:id="@+id/popupAW_LBL_description"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:text="description description description description description description description description description description description"
         android:textSize="20sp"
+        android:autoSizeMaxTextSize="25sp"
         android:gravity="start"
         android:autoSizeTextType="uniform"
         android:textColor="@color/black"
@@ -53,9 +63,9 @@
         />
     <LinearLayout
         android:showDividers="middle"
+        android:divider="@drawable/white_divider"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -63,27 +73,29 @@
 
         <Button
             android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="30sp"
             android:id="@+id/popupAW_BTN_done"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Done"
             android:textAllCaps="false"
             android:backgroundTint="@color/LIGHT_GREY"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:textColor="@color/black"
             />
 
         <Button
             android:autoSizeTextType="uniform"
-            android:id="@+id/popupAW_BTN_cancel"
+            android:autoSizeMaxTextSize="30sp"
+            android:id="@+id/popupAW_BTN_close"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Cancel"
+            android:text="Close"
             android:textAllCaps="false"
             android:backgroundTint="@color/DARK_GREY"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:textColor="@color/white"
             />
 

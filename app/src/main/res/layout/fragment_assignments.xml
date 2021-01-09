@@ -2,15 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/DARK_RED">
+    android:background="@color/LIGHT_GREY">
 
     <TextView
         android:id="@+id/assign_LBL_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="40dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="40sp"
+        android:autoSizeMinTextSize="20sp"
+        android:lines="1"
+        android:textSize="40sp"
         android:textColor="@color/black"
-        android:text="Your Assignments"
+        android:text="@string/YOUR_ASSIGNMENTS"
         android:textAllCaps="false"
         android:layout_centerHorizontal="true"
         android:gravity="center"

@@ -24,6 +24,7 @@ public class AssignmentMockDB {
             assignments.add(new Assignment("Make coffee again", LocalDate.now(), "1.5 sugar, im on a diet."));
             assignments.add(new Assignment("Not that coffee again", LocalDate.of(1985, 1, 1), "Enough..."));
             assignments.add(new Assignment("Stop with the coffee", LocalDate.now(), "Enough is enough !"));
+            assignments.add(new Assignment("This is a very long title maaan", LocalDate.now(), "And this is a very very very very loooooooooong description for the mission you should do for me bro"));
         }
             return assignments;
     }

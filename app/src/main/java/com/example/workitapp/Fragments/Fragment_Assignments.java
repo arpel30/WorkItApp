@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -97,6 +100,27 @@ public class Fragment_Assignments extends MyFragment {
 
         mDialog.setContentView(R.layout.popup_assignment_w);
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+        TextView popupAW_LBL_title = mDialog.findViewById(R.id.popupAW_LBL_title);
+        TextView popupAW_LBL_description = mDialog.findViewById(R.id.popupAW_LBL_description);
+        TextView popupAW_LBL_date = mDialog.findViewById(R.id.popupAW_LBL_date);
+        Button popupAW_BTN_close = mDialog.findViewById(R.id.popupAW_BTN_close);
+        Button popupAW_BTN_done = mDialog.findViewById(R.id.popupAW_BTN_done);
+        popupAW_LBL_title.setText(assignment.getTitle());
+        popupAW_LBL_description.setText(assignment.getDescription());
+        popupAW_LBL_date.setText(assignment.getDueTo().toString());
+        popupAW_BTN_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
+        popupAW_BTN_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Mission " + assignment.getTitle() + " is done !", Toast.LENGTH_SHORT).show();
+                mDialog.dismiss();
+            }
+        });
         mDialog.show();
 
     }
