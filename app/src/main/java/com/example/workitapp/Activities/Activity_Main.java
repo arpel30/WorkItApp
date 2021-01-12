@@ -11,8 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.example.workitapp.Fragments.Fragment_Manager_Assignments;
 import com.example.workitapp.More.Constants;
-import com.example.workitapp.Fragments.Fragment_Assignments;
+import com.example.workitapp.Fragments.Fragment_Worker_Assignments;
 import com.example.workitapp.Fragments.Fragment_Requests;
 import com.example.workitapp.Fragments.Fragment_Statistics;
 import com.example.workitapp.Objects.MySPV;
@@ -40,8 +41,7 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         // hide or show items
         Menu menu = main_NAV_navigation.getMenu();
-        menu.findItem(R.id.menu_ITM_login).setVisible(false);
-
+//        menu.findItem(R.id.menu_ITM_login).setVisible(false);
 
         main_NAV_navigation.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, main_DRL_drawer, main_TLB_toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -81,7 +81,7 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
                 getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Statistics()).commit();
                 break;
             case R.id.menu_ITM_assign:
-                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Assignments()).commit();
+                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Worker_Assignments()).commit();
                 break;
             case R.id.menu_ITM_requests:
                 getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Requests()).commit();
@@ -90,6 +90,7 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
                 signOut();
                 break;
             case R.id.menu_ITM_login:
+                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Manager_Assignments()).commit();
                 break;
 
         }

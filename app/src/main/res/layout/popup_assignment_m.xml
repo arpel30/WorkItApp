@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="350dp"
-    android:layout_height="350dp"
+    android:layout_height="450dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:orientation="vertical"
     android:background="@drawable/popup_bg"
@@ -16,7 +16,7 @@
 <!--        />-->
 
     <TextView
-        android:id="@+id/popupAW_LBL_title"
+        android:id="@+id/popupAM_LBL_title"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
@@ -37,31 +37,62 @@
         android:background="@color/DARK_RED" />
 
     <TextView
-        android:id="@+id/popupAW_LBL_description"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:text="description description description description description description description description description description description"
-        android:textSize="20sp"
-        android:autoSizeMaxTextSize="25sp"
-        android:gravity="start"
-        android:autoSizeTextType="uniform"
-        android:textColor="@color/black"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        />
-
-    <TextView
-        android:id="@+id/popupAW_LBL_date"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:text="@string/CHOOSE_WORKER"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        />
+
+    <com.webianks.library.scroll_choice.ScrollChoice
+        android:id="@+id/popupAM_SCC_workers"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        app:scroll_item_text_color="@color/black"
+        app:scroll_indicator="true"
+        app:scroll_indicator_color="@color/black"
+        app:scroll_item_align="center"
+        app:scroll_selected_item_text_color="@color/DARK_RED"
+        app:scroll_atmospheric="true"
+        android:scrollbarStyle="outsideOverlay"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:scroll_item_text_size="20sp"
+        />
+
+    <LinearLayout
+        android:dividerPadding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/DUE_TO"
+            android:textSize="15sp"
+            android:gravity="end"
+            android:textColor="@color/DARK_GREY"
+            />
+
+    <TextView
+        android:id="@+id/popupAM_LBL_date"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:text="20/2/2021"
         android:textSize="15sp"
-        android:gravity="center"
-        android:layout_marginTop="18dp"
+        android:gravity="start"
+        android:textColor="@color/DARK_GREY"
         />
+    </LinearLayout>
     <LinearLayout
         android:showDividers="middle"
         android:divider="@drawable/white_divider"
@@ -75,7 +106,7 @@
         <Button
             android:autoSizeTextType="uniform"
             android:autoSizeMaxTextSize="30sp"
-            android:id="@+id/popupAW_BTN_done"
+            android:id="@+id/popupAM_BTN_done"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -89,7 +120,7 @@
         <Button
             android:autoSizeTextType="uniform"
             android:autoSizeMaxTextSize="30sp"
-            android:id="@+id/popupAW_BTN_close"
+            android:id="@+id/popupAM_BTN_close"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

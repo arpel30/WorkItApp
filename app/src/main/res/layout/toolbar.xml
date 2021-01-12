@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/DARK_RED"
     android:elevation="4dp"
+    android:layoutDirection="ltr"
     >
 
 </androidx.appcompat.widget.Toolbar>

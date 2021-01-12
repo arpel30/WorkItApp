@@ -52,4 +52,7 @@ dependencies {
 
     // TextField for input
     implementation 'com.github.simformsolutions:SSCustomEditTextOutLineBorder:1.0.8'
+
+    // scroll choice
+    implementation 'com.webianks.library:scroll-choice:1.0.1'
 }

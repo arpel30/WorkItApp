@@ -32,6 +32,7 @@ public class MyScreenUtils {
                         // Dim the Status and Navigation Bars
                         | View.SYSTEM_UI_FLAG_LOW_PROFILE);*/
 
+//        activity.getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         Window window = activity.getWindow();
 
 // clear FLAG_TRANSLUCENT_STATUS flag:

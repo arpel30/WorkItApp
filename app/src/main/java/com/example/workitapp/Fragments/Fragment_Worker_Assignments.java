@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,19 +23,12 @@ import com.example.workitapp.More.MyCallBack;
 import com.example.workitapp.Objects.Assignment;
 import com.example.workitapp.R;
 import com.example.workitapp.Objects.Worker;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class Fragment_Assignments extends MyFragment {
+public class Fragment_Worker_Assignments extends MyFragment {
     private RecyclerView assign_LST_assignments;
     private View view;
     private Context context;
@@ -60,7 +51,7 @@ public class Fragment_Assignments extends MyFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_assignments, container, false);
+        view = inflater.inflate(R.layout.fragment_worker_assignments, container, false);
         context = view.getContext();
         findViews();
         initViews();

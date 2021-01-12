@@ -9,6 +9,7 @@
     android:fitsSystemWindows="true"
     tools:context=".Activities.Activity_Main"
     tools:openDrawer="start"
+    android:layoutDirection="ltr"
     >
 
 

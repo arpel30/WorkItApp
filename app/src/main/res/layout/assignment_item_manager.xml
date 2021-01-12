@@ -12,7 +12,7 @@
     >
 
     <RelativeLayout
-        android:id="@+id/assignItemW_LAY_item"
+        android:id="@+id/assignItemM_LAY_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/item_dgrey_bg"
@@ -20,7 +20,7 @@
         android:layoutDirection="ltr">
 
        <TextView
-           android:id="@+id/assignItemW_LBL_title"
+           android:id="@+id/assignItemM_LBL_title"
            android:lines="1"
            android:autoSizeTextType="uniform"
            android:autoSizeMaxTextSize="30sp"
@@ -35,14 +35,14 @@
            />
 
         <TextView
-            android:id="@+id/assignItemW_LBL_date"
+            android:id="@+id/assignItemM_LBL_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="8/1/2021"
             android:textSize="20sp"
             android:textColor="@color/DARK_GREY"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/assignItemW_LBL_title"
+            android:layout_below="@id/assignItemM_LBL_title"
             />
 
 
