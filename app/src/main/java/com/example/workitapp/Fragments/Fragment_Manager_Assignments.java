@@ -124,12 +124,6 @@ public class Fragment_Manager_Assignments extends MyFragment {
     }
 
     private void openInfo(Assignment assignment) {
-//        new AlertDialog.Builder(context)
-//                .setTitle(assignment.getTitle() +" : " + assignment.getDueTo().toString())
-//                .setMessage(assignment.getDescription())
-//                .setPositiveButton("Close", null)
-//                .show();
-
         mDialog.setContentView(R.layout.popup_assignment_m);
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
         TextView popupAM_LBL_title = mDialog.findViewById(R.id.popupAM_LBL_title);

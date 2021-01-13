@@ -6,12 +6,28 @@
     android:layoutDirection="ltr">
 
     <TextView
-        android:id="@+id/reqs_LBL_uid"
-        android:layout_width="wrap_content"
+        android:id="@+id/requests_LBL_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Requests boy"
-        android:layout_centerInParent="true"
-        android:textSize="50sp"/>
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="40sp"
+        android:autoSizeMinTextSize="20sp"
+        android:lines="1"
+        android:textSize="40sp"
+        android:textColor="@color/black"
+        android:text="@string/REQUESTS"
+        android:textAllCaps="false"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/requests_LBL_title"
+        android:id="@+id/requests_LST_requests"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
 </RelativeLayout>

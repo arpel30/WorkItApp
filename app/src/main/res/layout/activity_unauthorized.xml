@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context=".Activities.Activity_Unauthorized"
+    android:layoutDirection="ltr">
+
+    <TextView
+        android:id="@+id/unauth_LBL_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sorry, Moshe Levi"
+        android:layout_marginTop="40dp"
+        android:lines="1"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="40sp"
+        android:autoSizeMinTextSize="20sp"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/unauth_pic"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="Your Request Is Still\nWaiting For HR Approval"
+        android:lines="2"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="40sp"
+        android:autoSizeMinTextSize="20sp"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        />
+
+</LinearLayout>

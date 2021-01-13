@@ -23,5 +23,10 @@
     <string name="YOUR_ASSIGNMENTS">Your Assignments</string>
     <string name="ASSIGN">Assign</string>
     <string name="CHOOSE_WORKER">Choose Worker :</string>
-    <string name="DUE_TO">"Due to : "</string>
+    <string name="DUE_TO">Due to : </string>
+    <string name="DIVISION">Division : </string>
+    <string name="EMAIL">Email : </string>
+    <string name="DATE">Date :</string>
+    <string name="APPROVE">Approve</string>
+    <string name="DECLINE">Decline</string>
 </resources>

@@ -1,18 +1,30 @@
 package com.example.workitapp.Objects;
 
+import android.os.Build;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Request {
     String userId;
     Worker worker;
-    Date date;
+    LocalDate date;
 
     public Request() {
     }
 
     public Request(String userId) {
         this.userId = userId;
-        date = new Date();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            date = LocalDate.now();
+        }
+    }
+
+    public Request(Worker worker) {
+        this.worker = worker;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            date = LocalDate.now();
+        }
     }
 
     public String getUserId() {
@@ -31,11 +43,11 @@ public class Request {
         this.worker = worker;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 }

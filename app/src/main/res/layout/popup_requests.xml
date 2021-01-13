@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="450dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/popup_bg"
+    android:layoutDirection="ltr">
+
+<!--    <ImageView-->
+<!--        android:layout_width="150dp"-->
+<!--        android:layout_height="150dp"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginTop="18dp"-->
+<!--        />-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+    <TextView
+        android:id="@+id/popupRequest_LBL_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:lines="1"
+        android:text="TITLE"
+        android:layout_margin="5dp"
+        android:textSize="30sp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="40dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        />
+
+        <ImageView
+            android:id="@+id/popupRequest_IMG_close"
+            android:layout_margin="5dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:clickable="true"
+            android:src="@drawable/icon_close"
+            />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/DARK_RED" />
+
+    <LinearLayout
+        android:dividerPadding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            android:lines="1"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="25sp"
+            android:autoSizeMinTextSize="10sp"
+            android:text="@string/EMAIL"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:id="@+id/popupRequest_LBL_email"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:text="moshepelled11@gmail.com"
+            android:lines="1"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="25sp"
+            android:autoSizeMinTextSize="10sp"
+            android:textSize="25sp"
+            android:gravity="start|center_vertical"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:dividerPadding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            android:lines="1"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="25sp"
+            android:autoSizeMinTextSize="10sp"
+            android:text="@string/DIVISION"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:id="@+id/popupRequest_LBL_division"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="start|center_vertical"
+            android:lines="1"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="25sp"
+            android:autoSizeMinTextSize="10sp"
+            android:text="20"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:dividerPadding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            android:lines="1"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="25sp"
+            android:autoSizeMinTextSize="10sp"
+            android:text="@string/DATE"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            />
+
+    <TextView
+        android:id="@+id/popupRequest_LBL_date"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:gravity="start|center_vertical"
+        android:lines="1"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="25sp"
+        android:autoSizeMinTextSize="10sp"
+        android:text="20/2/2021"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        />
+    </LinearLayout>
+    <LinearLayout
+        android:showDividers="middle"
+        android:divider="@drawable/white_divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        >
+
+        <Button
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="30sp"
+            android:id="@+id/popupRequest_BTN_approve"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/APPROVE"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/APPROVE_GREEN"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            />
+
+        <Button
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="30sp"
+            android:id="@+id/popupRequest_BTN_decline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/DECLINE"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/DECLINE_RED"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

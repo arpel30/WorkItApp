@@ -3,6 +3,8 @@ package com.example.workitapp;
 import android.os.Build;
 
 import com.example.workitapp.Objects.Assignment;
+import com.example.workitapp.Objects.Request;
+import com.example.workitapp.Objects.Worker;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,5 +29,18 @@ public class AssignmentMockDB {
             assignments.add(new Assignment("This is a very long title maaan", LocalDate.now(), "And this is a very very very very loooooooooong description for the mission you should do for me bro"));
         }
             return assignments;
+    }
+
+    public static ArrayList<Request> generateReqs() {
+        ArrayList<Request> requests = new ArrayList<>();
+        requests.add(new Request(new Worker("Arad", "aea","aaa",10)));
+        requests.add(new Request(new Worker("Avi", "aea","aaa",10)));
+        requests.add(new Request(new Worker("Moshe", "moshelevi123@gmail.com","aaa",10)));
+        requests.add(new Request(new Worker("Nemo", "aea","aaa",10)));
+        requests.add(new Request(new Worker("Levi", "aea","aaa",10)));
+        requests.add(new Request(new Worker("Omri", "aea","aaa",10)));
+        requests.add(new Request(new Worker("Roni", "aea","aaa",10)));
+        requests.add(new Request(new Worker("Menashe", "aea","aaa",10)));
+        return requests;
     }
 }

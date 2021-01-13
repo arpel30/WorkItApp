@@ -12,4 +12,6 @@
     <color name="LIGHT_GREY">#C0C0C0</color>
     <color name="TRANSPARENT">#00FFFFFF</color>
     <color name="RED">#F44336</color>
+    <color name="APPROVE_GREEN">#00AB66</color>
+    <color name="DECLINE_RED">#ED1313</color>
 </resources>

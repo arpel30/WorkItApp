@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="10dp"
+    android:elevation="6dp"
+    app:cardElevation="6dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/requestItem_LAY_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_dgrey_bg"
+        tools:context=".Activities.Activity_Main"
+        android:layoutDirection="ltr">
+
+       <TextView
+           android:id="@+id/requestItem_LBL_title"
+           android:lines="1"
+           android:autoSizeTextType="uniform"
+           android:autoSizeMaxTextSize="30sp"
+           android:autoSizeMinTextSize="20sp"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Make Me Coffee"
+           android:textSize="30sp"
+           android:textColor="@color/black"
+           android:layout_centerHorizontal="true"
+           android:layout_margin="5dp"
+           />
+
+        <TextView
+            android:id="@+id/requestItem_LBL_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/DIVISION"
+            android:textSize="20sp"
+            android:textColor="@color/DARK_GREY"
+            android:gravity="center"
+            android:layout_below="@id/requestItem_LBL_title"
+            android:layout_centerHorizontal="true"
+            />
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>
