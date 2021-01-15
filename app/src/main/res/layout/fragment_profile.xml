@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_IMG_pic"
+        android:layout_width="175dp"
+        android:layout_marginTop="40dp"
+        android:layout_height="175dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/ic_launcher"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/DARK_RED"/>
+
+<!--    <ImageView-->
+<!--        android:id="@+id/profile_IMG_pic2"-->
+<!--        -->
+<!--        android:layout_width="175dp"-->
+<!--        android:layout_height="175dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:src="@mipmap/ic_launcher_round"-->
+<!--        android:background="@drawable/popup_bg"-->
+<!--        />-->
+    <TextView
+        android:id="@+id/profile_LBL_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Moshe Levi"
+        android:layout_marginTop="10dp"
+        android:lines="1"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="40sp"
+        android:autoSizeMinTextSize="20sp"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="@color/black"/>
+    <TextView
+        android:id="@+id/profile_LBL_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="moshelevi123@gmail.com"
+        android:layout_marginTop="10dp"
+        android:lines="1"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="25sp"
+        android:autoSizeMinTextSize="15sp"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="@color/DARK_GREY"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/MY_PERFORMANCE"
+        android:layout_marginTop="40dp"
+        android:lines="1"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="25sp"
+        android:autoSizeMinTextSize="15sp"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/DARK_GREY"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_margin="2dp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/CURRENT_WEEK"
+                android:lines="1"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="25sp"
+                android:autoSizeMinTextSize="15sp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@color/black"/>
+
+            <com.vaibhavlakhera.circularprogressview.CircularProgressView
+                android:id="@+id/profile_PRB_week"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                app:fillColor="@color/TRANSPARENT"
+                app:progress="0"
+                app:progressColor="@color/black"
+                app:progressTextColor="@color/black"
+                app:progressTextEnabled="true"
+                app:progressTextSize="32sp"
+                app:progressTextType="percent"
+                app:progressWidth="8dp"
+                app:totalWidth="8dp"
+                app:progressRoundCap="true"
+                app:total="100"
+                app:totalColor="@color/LIGHT_GREY"
+                 />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_margin="2dp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ALL_TIMES"
+                android:lines="1"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="25sp"
+                android:autoSizeMinTextSize="15sp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@color/black"/>
+
+
+            <com.vaibhavlakhera.circularprogressview.CircularProgressView
+                android:id="@+id/profile_PRB_allTime"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                app:fillColor="@color/TRANSPARENT"
+                app:progress="0"
+                app:progressColor="@color/black"
+                app:progressTextColor="@color/black"
+                app:progressTextEnabled="true"
+                app:progressTextSize="32sp"
+                app:progressTextType="percent"
+                app:progressWidth="8dp"
+                app:totalWidth="8dp"
+                app:progressRoundCap="true"
+                app:total="100"
+                app:totalColor="@color/LIGHT_GREY"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_margin="2dp"
+
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ASSIGNMENTS_LEFT"
+                android:lines="1"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="25sp"
+                android:autoSizeMinTextSize="15sp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@color/black"/>
+
+            <com.vaibhavlakhera.circularprogressview.CircularProgressView
+                android:id="@+id/profile_PRB_left"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                app:fillColor="@color/TRANSPARENT"
+                app:progress="0"
+                app:progressColor="@color/black"
+                app:progressTextColor="@color/black"
+                app:progressTextEnabled="true"
+                app:progressTextSize="32sp"
+                app:progressTextType="progress"
+                app:progressWidth="8dp"
+                app:totalWidth="8dp"
+                app:progressRoundCap="true"
+                app:total="12"
+                app:totalColor="@color/LIGHT_GREY"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/profile_LBL_division"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:lines="1"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="25sp"
+        android:autoSizeMinTextSize="15sp"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:layout_marginBottom="5dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/profile_LBL_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:lines="1"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="25sp"
+        android:autoSizeMinTextSize="15sp"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="@color/DARK_GREY"
+        android:layout_marginBottom="20dp"
+        />
+
+</LinearLayout>

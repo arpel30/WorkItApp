@@ -1,5 +1,10 @@
 package com.example.workitapp.Objects;
 
+import android.os.Build;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 public class Worker {
     private String name;
     private String email;
@@ -7,19 +12,57 @@ public class Worker {
     private int divisionID;
     private String imgUrl;
     private boolean isAccepted;
-    Assignment[] assignments;
+    ArrayList<Assignment> assignments = new ArrayList<>();
+    private int assignmentsDoneAll;
+    private int assignmentsDoneWeek;
+    private LocalDate startDate;
 
 
     public Worker() {
+        this.isAccepted = false;
+        this.assignmentsDoneAll=0;
+        this.assignmentsDoneWeek=0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startDate = LocalDate.now();
+        }
     }
 
     public Worker(String name, String email, String password, int divisionID) {
         this.name = name;
         this.email = email;
         this.divisionID = divisionID;
-        this.imgUrl = imgUrl;
+        this.imgUrl = "default";
         this.isAccepted = false;
         this.password = password;
+        this.assignmentsDoneAll=0;
+        this.assignmentsDoneWeek=0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startDate = LocalDate.now();
+        }
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public int getAssignmentsDoneAll() {
+        return assignmentsDoneAll;
+    }
+
+    public void setAssignmentsDoneAll(int assignmentsDoneAll) {
+        this.assignmentsDoneAll = assignmentsDoneAll;
+    }
+
+    public int getAssignmentsDoneWeek() {
+        return assignmentsDoneWeek;
+    }
+
+    public void setAssignmentsDoneWeek(int assignmentsDoneWeek) {
+        this.assignmentsDoneWeek = assignmentsDoneWeek;
     }
 
     public String getPassword() {
@@ -70,11 +113,11 @@ public class Worker {
         isAccepted = accepted;
     }
 
-    public Assignment[] getAssignments() {
+    public ArrayList<Assignment> getAssignments() {
         return assignments;
     }
 
-    public void setAssignments(Assignment[] assignments) {
+    public void setAssignments(ArrayList<Assignment> assignments) {
         this.assignments = assignments;
     }
 }

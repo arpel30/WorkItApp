@@ -55,4 +55,10 @@ dependencies {
 
     // scroll choice
     implementation 'com.webianks.library:scroll-choice:1.0.1'
+
+    // progress bar
+    implementation 'com.github.VaibhavLakhera:Circular-Progress-View:0.1.0'
+
+    // circle image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.example.workitapp.Fragments.Fragment_Manager_Assignments;
+import com.example.workitapp.Fragments.Fragment_Profile;
 import com.example.workitapp.More.Constants;
 import com.example.workitapp.Fragments.Fragment_Worker_Assignments;
 import com.example.workitapp.Fragments.Fragment_Requests;
@@ -76,9 +77,10 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         switch (item.getItemId()) {
             case R.id.menu_ITM_home:
 //                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Statistics()).commit();
-                Intent i = new Intent(Activity_Main.this, Activity_Unauthorized.class);
-                startActivity(i);
-                finish();
+//                Intent i = new Intent(Activity_Main.this, Activity_Unauthorized.class);
+//                startActivity(i);
+//                finish();
+                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Manager_Assignments()).commit();
                 break;
             case R.id.menu_ITM_stats:
                 getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Statistics()).commit();
@@ -92,8 +94,8 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
             case R.id.menu_ITM_logout:
                 signOut();
                 break;
-            case R.id.menu_ITM_login:
-                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Manager_Assignments()).commit();
+            case R.id.menu_ITM_profile:
+                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Profile()).commit();
                 break;
 
         }
