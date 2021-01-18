@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.workitapp.Activities.Activity_Base;
 import com.example.workitapp.AssignmentMockDB;
 import com.example.workitapp.Objects.Worker;
@@ -57,7 +58,11 @@ public class Fragment_Profile extends Fragment {
     }
 
     private void initViews() {
-//        (Activity_Base)getActivity().
+        Glide
+                .with(this)
+                .load(R.drawable.unauth_pic)
+                .into(profile_IMG_pic);
+
         w.setAssignmentsDoneWeek(10);
         w.setAssignmentsDoneAll(60);
         int tasksLeft = w.getAssignments().size();
@@ -69,6 +74,7 @@ public class Fragment_Profile extends Fragment {
         profile_PRB_allTime.setProgress((int)((w.getAssignmentsDoneAll()*100)/(w.getAssignmentsDoneAll()+tasksLeft)), true);
         profile_PRB_left.setTotal(tasksLeft);
         profile_PRB_left.setProgress(tasksLeft, true);
+//        (Activity_Base)getActivity().setIma
     }
 
     private void findViews() {

@@ -9,7 +9,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.workitapp.Fragments.Fragment_Manager_Assignments;
 import com.example.workitapp.Fragments.Fragment_Profile;
@@ -18,6 +21,7 @@ import com.example.workitapp.Fragments.Fragment_Worker_Assignments;
 import com.example.workitapp.Fragments.Fragment_Requests;
 import com.example.workitapp.Fragments.Fragment_Statistics;
 import com.example.workitapp.Objects.MySPV;
+import com.example.workitapp.Objects.Worker;
 import com.example.workitapp.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,17 +31,22 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
 
     private DrawerLayout main_DRL_drawer;
     private NavigationView main_NAV_navigation;
+    private ImageView header_IMG_profile;
+    private TextView header_LBL_email;
+    private TextView header_LBL_name;
 
     private androidx.appcompat.widget.Toolbar main_TLB_toolbar;
     private FrameLayout main_FRL_container;
+    Worker w = new Worker("Arad Pelled", "ap@gmail.com", "aklaksk", 20);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        // init w from firebase
         findViews();
+        initViews();
         setSupportActionBar(main_TLB_toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         // hide or show items
@@ -57,6 +66,12 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         }
     }
 
+    private void initViews() {
+        setImage(R.drawable.unauth_pic, header_IMG_profile);
+        header_LBL_email.setText(w.getEmail());
+        header_LBL_name.setText(w.getName());
+    }
+
     @Override
     public void onBackPressed() {
         if (main_DRL_drawer.isDrawerOpen(GravityCompat.START)) {
@@ -70,6 +85,11 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         main_DRL_drawer = findViewById(R.id.main_DRL_drawer);
         main_NAV_navigation = findViewById(R.id.main_NAV_navigation);
         main_FRL_container = findViewById(R.id.main_FRL_container);
+
+        View header = main_NAV_navigation.getHeaderView(0);
+        header_IMG_profile = header.findViewById(R.id.header_IMG_profile);
+        header_LBL_email = header.findViewById(R.id.header_LBL_email);
+        header_LBL_name = header.findViewById(R.id.header_LBL_name);
     }
 
     @Override

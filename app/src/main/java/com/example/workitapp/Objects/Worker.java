@@ -4,6 +4,7 @@ import android.os.Build;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Worker {
     private String name;
@@ -21,7 +22,8 @@ public class Worker {
     public Worker() {
         this.isAccepted = false;
         this.assignmentsDoneAll=0;
-        this.assignmentsDoneWeek=0;
+//        this.assignmentsDoneWeek=0;
+        this.assignmentsDoneWeek=new Random().nextInt(10);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startDate = LocalDate.now();
         }

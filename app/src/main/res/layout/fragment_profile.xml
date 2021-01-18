@@ -14,18 +14,10 @@
         android:layout_height="175dp"
         android:layout_gravity="center"
         android:src="@mipmap/ic_launcher"
+        android:scaleType="centerCrop"
         app:civ_border_width="2dp"
         app:civ_border_color="@color/DARK_RED"/>
 
-<!--    <ImageView-->
-<!--        android:id="@+id/profile_IMG_pic2"-->
-<!--        -->
-<!--        android:layout_width="175dp"-->
-<!--        android:layout_height="175dp"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:src="@mipmap/ic_launcher_round"-->
-<!--        android:background="@drawable/popup_bg"-->
-<!--        />-->
     <TextView
         android:id="@+id/profile_LBL_name"
         android:layout_width="match_parent"

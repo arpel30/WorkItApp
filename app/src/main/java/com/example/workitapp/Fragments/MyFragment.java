@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.workitapp.More.MyCallBack;
+import com.example.workitapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -28,5 +31,12 @@ public class MyFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         return null;
+    }
+
+    protected void setImage(int id, ImageView view){
+        Glide
+                .with(this)
+                .load(id)
+                .into(view);
     }
 }

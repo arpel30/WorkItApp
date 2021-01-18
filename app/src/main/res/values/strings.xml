@@ -34,4 +34,6 @@
     <string name="CURRENT_MONTH">Current Month</string>
     <string name="ALL_TIMES">All Times</string>
     <string name="ASSIGNMENTS_LEFT">Tasks Left</string>
+    <string name="ASSIGNMENTS_BY_EMP">Assignments By Employee</string>
+    <string name="DONE_NOTDONE">Done/Not Done</string>
 </resources>
