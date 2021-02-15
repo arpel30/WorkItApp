@@ -85,8 +85,9 @@
                 app:progressWidth="8dp"
                 app:totalWidth="8dp"
                 app:progressRoundCap="true"
-                app:progress="54"
-                app:total="100"
+                app:progress="0"
+                app:total="0"
+                app:animateDuration="600"
                 app:totalColor="@color/LIGHT_GREY"
                  />
 
@@ -128,8 +129,9 @@
                 app:progressWidth="8dp"
                 app:totalWidth="8dp"
                 app:progressRoundCap="true"
-                app:progress="67"
-                app:total="100"
+                app:progress="0"
+                app:total="0"
+                app:animateDuration="600"
                 app:totalColor="@color/LIGHT_GREY"
                 />
 
@@ -171,8 +173,9 @@
                 app:progressWidth="8dp"
                 app:totalWidth="8dp"
                 app:progressRoundCap="true"
-                app:progress="21"
-                app:total="21"
+                app:progress="0"
+                app:total="0"
+                app:animateDuration="600"
                 app:totalColor="@color/LIGHT_GREY"
                 />
 

@@ -23,9 +23,12 @@ import com.example.workitapp.Adapter_Requests;
 import com.example.workitapp.Adapter_Statistics;
 import com.example.workitapp.AssignmentMockDB;
 import com.example.workitapp.LabelFormatter;
+import com.example.workitapp.More.CompareByAssignmentsDoneWeekly;
 import com.example.workitapp.More.Constants;
 import com.example.workitapp.More.MyCallBack;
 import com.example.workitapp.Objects.Assignment;
+import com.example.workitapp.Objects.Manager;
+import com.example.workitapp.Objects.MyFirebase;
 import com.example.workitapp.Objects.MySPV;
 import com.example.workitapp.Objects.Request;
 import com.example.workitapp.R;
@@ -48,9 +51,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.vaibhavlakhera.circularprogressview.CircularProgressView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.RandomAccess;
 
@@ -62,9 +67,18 @@ public class Fragment_Statistics extends MyFragment {
     private View view;
     private Context context;
 
+    private CircularProgressView profile_PRB_left;
+    private CircularProgressView profile_PRB_week;
+    private CircularProgressView profile_PRB_allTime;
+
+    private int allTime;
+    private int week;
+    private int left;
+
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("Workers");
     private Worker w;
+    private Manager manager;
 
     private MyCallBack callBack;
 
@@ -81,9 +95,86 @@ public class Fragment_Statistics extends MyFragment {
         view = inflater.inflate(R.layout.fragment_statistics, container, false);
         context = view.getContext();
         findViews();
-        getWorkers();
-        initViews();
+        getWorkers2();
+//        workers = new ArrayList<>();
+//        Log.d("aaa", workers.toString());
+//        getWorker("oj1ySRivKKX3rze9s5IyyKGOkrg2");
+//        Log.d("aaa", workers.toString());
+//        getDivision(1);
+//        workers.sort(new CompareByAssignmentsDoneWeekly());
+//        initViews();
         return view;
+    }
+
+    private void getWorkers2() {
+        user = MyFirebase.getInstance().getUser();
+        if (user != null) {
+            getWorker(user.getUid(), Constants.MANAGER_ID);
+//            workers = new ArrayList<>();
+//            getDivision(manager.getDivisionID());
+        }
+    }
+
+    public void getDivision(int division) {
+//        workers = new ArrayList<>();
+        DatabaseReference divRef = MyFirebase.getInstance().getFdb().getReference(Constants.DIVISION_PATH);
+        divRef = divRef.child(division + "");
+        divRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                workers = new ArrayList<>();
+                getAllUids((Map<String, String>) snapshot.getValue());
+//                Log.d("aaa", "hello");
+//                String[] uids = snapshot.getValue(String[].class);
+//                Log.d("aaa", uids.toString());
+//                for (String uid : uids) {
+//                    getWorker(uid);
+//                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    private void getAllUids(Map<String, String> uids) {
+        for (Map.Entry<String, String> entry : uids.entrySet()) {
+            String uid = entry.getValue();
+            Log.d("aaa", uid);
+            getWorker(uid, Constants.WORKER_ID);
+        }
+    }
+
+    // type 0-manager, 1 worker
+    public void getWorker(String uid, int type) {
+//        final Worker[] worker = new Worker[1];
+        DatabaseReference divRef = MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH);
+        divRef = divRef.child(uid);
+        divRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                worker[0] = snapshot.getValue(Worker.class);
+                Worker tmpW = snapshot.getValue(Worker.class);
+                tmpW.setAssignments(new ArrayList<>());
+                if (type == Constants.WORKER_ID) {
+                    if (workers.contains(tmpW)) {
+                        workers.remove(tmpW);
+                    }
+                    workers.add(tmpW);
+                    workers.sort(new CompareByAssignmentsDoneWeekly());
+                    initViews();
+                } else if (type == Constants.MANAGER_ID) {
+                    getDivision(tmpW.getDivisionID());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+//        return worker[0];
     }
 
     private void getWorkers() {
@@ -122,15 +213,16 @@ public class Fragment_Statistics extends MyFragment {
 
     private void initViews() {
 //        workers = AssignmentMockDB.generateReqs();
+//        Log.d("aaa", workers.toString());
         adapter_statistics = new Adapter_Statistics(context, workers);
 
         adapter_statistics.setClickListener(new Adapter_Statistics.MyItemClickListener() {
-
         });
 
         stats_LST_workers.setLayoutManager(new LinearLayoutManager(context));
         stats_LST_workers.setAdapter(adapter_statistics);
 
+        getParams();
         int[] colorArr = new int[]{Color.CYAN, Color.RED};
 
         BarDataSet barDataSet = new BarDataSet(dataValues(), "");
@@ -141,18 +233,6 @@ public class Fragment_Statistics extends MyFragment {
         stats_BCH_chart.setData(barData);
         stats_BCH_chart.setScaleEnabled(false);
         stats_BCH_chart.setDescription(null);
-//        stats_BCH_chart.getXAxis().setValueFormatter(new LabelFormatter((ArrayList<String>) getNames(workers)));
-//        stats_BCH_chart.getXAxis().setValueFormatter(new ValueFormatter() {
-//            @Override
-//            public String getFormattedValue(float value, AxisBase axis) {
-//                return workers.get((int) value).getName();
-//
-//            }
-//        });
-
-//        String[] xAxisLables = new String[]{"d1d","s2", "a3", "hi", "a3", "hi", "hi"};
-//        stats_BCH_chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisLables));
-
 
         ArrayList<String> xAxisLables = new ArrayList();
         for (int i = 0; i < workers.size(); i++) {
@@ -167,8 +247,26 @@ public class Fragment_Statistics extends MyFragment {
 //        xAxis.setLabelRotationAngle(-90);
         stats_BCH_chart.setVisibleXRangeMaximum(7);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisLables));
-
+        stats_BCH_chart.invalidate();
 //        (String[]) getNames(workers).toArray()
+
+    }
+
+    private void getParams() {
+        allTime = 0;
+        week = 0;
+        left = 0;
+        for (Worker worker : workers) {
+            allTime += worker.getAssignmentsDoneAll();
+            week += worker.getAssignmentsDoneWeek();
+            left += worker.getAssignments().size();
+        }
+        profile_PRB_left.setTotal(left);
+        profile_PRB_allTime.setTotal(allTime*100);
+        profile_PRB_week.setTotal(week*100+1000);
+        profile_PRB_left.setProgress(left, true);
+        profile_PRB_allTime.setProgress(allTime*40, true);
+        profile_PRB_week.setProgress(week*90, true);
 
     }
 
@@ -183,7 +281,7 @@ public class Fragment_Statistics extends MyFragment {
     private ArrayList<BarEntry> dataValues() {
         ArrayList<BarEntry> vals = new ArrayList<>();
         for (int i = 0; i < workers.size(); i++) {
-            vals.add(new BarEntry(i, new float[]{workers.get(i).getAssignmentsDoneWeek(), new Random().nextInt(5)}));
+            vals.add(new BarEntry(i, new float[]{workers.get(i).getAssignmentsDoneWeek(), workers.get(i).getAssignments().size()}));
         }
         return vals;
     }
@@ -200,6 +298,11 @@ public class Fragment_Statistics extends MyFragment {
         stats_LBL_title = view.findViewById(R.id.stats_LBL_title);
         stats_LST_workers = view.findViewById(R.id.stats_LST_workers);
         stats_BCH_chart = view.findViewById(R.id.stats_BCH_chart);
+
+        profile_PRB_allTime = view.findViewById(R.id.profile_PRB_allTime);
+        profile_PRB_week = view.findViewById(R.id.profile_PRB_week);
+        profile_PRB_left = view.findViewById(R.id.profile_PRB_left);
+
     }
 
 }

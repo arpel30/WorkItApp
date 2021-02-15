@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.workitapp.More.Constants;
+import com.example.workitapp.Objects.MyFirebase;
 import com.example.workitapp.R;
 import com.example.workitapp.Objects.Worker;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,30 +47,33 @@ public class Activity_Request extends Activity_Base {
     }
 
     private void register(Worker w) {
-        auth.createUserWithEmailAndPassword(w.getEmail(), w.getPassword())
+        MyFirebase.getInstance().getAuth().createUserWithEmailAndPassword(w.getEmail(), w.getPassword())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = auth.getCurrentUser();
-                            String uid = user.getUid();
-                            clearText();
-                            ref = FirebaseDatabase.getInstance().getReference("Workers").child(uid);
-                            ref.setValue(w).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(getBaseContext(), "Request has been sent.", Toast.LENGTH_SHORT).show();
-//                                        Toast.makeText(Activity_Request.this, "Request has been sent.", Toast.LENGTH_SHORT).show();
-                                        Log.d("aaa", "Req - Request has been sent.");
-                                        Intent i = new Intent(Activity_Request.this, Activity_Login.class);
-                                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(i);
-                                        finish();
-                                    } else
-                                        Toast.makeText(Activity_Request.this, "Invalid Email or Password", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                            FirebaseUser user = MyFirebase.getInstance().getUser();
+                            if (user != null) {
+                                String uid = user.getUid();
+                                clearText();
+                                ref = FirebaseDatabase.getInstance().getReference();
+                                ref.child(Constants.WORKER_PATH).child(uid).setValue(w);
+                                //                                ref.child(Constants.WORKER_PATH+"2").child(uid).setValue(w).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<Void> task) {
+//                                        if (task.isSuccessful()) {
+//                                            Toast.makeText(getBaseContext(), "Request has been sent.", Toast.LENGTH_SHORT).show();
+////                                        Toast.makeText(Activity_Request.this, "Request has been sent.", Toast.LENGTH_SHORT).show();
+//                                            Log.d("aaa", "Req - Request has been sent.");
+//                                            Intent i = new Intent(Activity_Request.this, Activity_Login.class);
+//                                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                            startActivity(i);
+//                                            finish();
+//                                        } else
+//                                            Toast.makeText(Activity_Request.this, "Invalid Email or Password", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+                            }
                         } else
                             Toast.makeText(Activity_Request.this, "Invalid Email or Password", Toast.LENGTH_SHORT).show();
                     }

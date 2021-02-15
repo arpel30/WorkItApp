@@ -2,6 +2,8 @@ package com.example.workitapp.Objects;
 
 import android.os.Build;
 
+import androidx.annotation.Nullable;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,23 +15,25 @@ public class Worker {
     private int divisionID;
     private String imgUrl;
     private boolean isAccepted;
-    ArrayList<Assignment> assignments = new ArrayList<>();
+    ArrayList<Assignment> assignments;
     private int assignmentsDoneAll;
     private int assignmentsDoneWeek;
-    private LocalDate startDate;
+    private String startDate;
 
 
     public Worker() {
-        this.isAccepted = false;
-        this.assignmentsDoneAll=0;
-//        this.assignmentsDoneWeek=0;
-        this.assignmentsDoneWeek=new Random().nextInt(10);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startDate = LocalDate.now();
-        }
+//        assignments  = new ArrayList<>();
+//        this.isAccepted = false;
+//        this.assignmentsDoneAll=0;
+////        this.assignmentsDoneWeek=0;
+//        this.assignmentsDoneWeek=new Random().nextInt(10);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            startDate = LocalDate.now();
+//        }
     }
 
     public Worker(String name, String email, String password, int divisionID) {
+        assignments  = new ArrayList<>();
         this.name = name;
         this.email = email;
         this.divisionID = divisionID;
@@ -39,15 +43,39 @@ public class Worker {
         this.assignmentsDoneAll=0;
         this.assignmentsDoneWeek=0;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startDate = LocalDate.now();
+            startDate = LocalDate.now().toString();
         }
     }
 
-    public LocalDate getStartDate() {
+    @Override
+    public String toString() {
+        return "Worker{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", divisionID=" + divisionID +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", isAccepted=" + isAccepted +
+                ", assignments=" + assignments +
+                ", assignmentsDoneAll=" + assignmentsDoneAll +
+                ", assignmentsDoneWeek=" + assignmentsDoneWeek +
+                ", startDate='" + startDate + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj != null && obj instanceof Worker) {
+            return this.email == ((Worker) obj).getEmail();
+        }
+        return false;
+    }
+
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
@@ -107,16 +135,17 @@ public class Worker {
         this.imgUrl = imgUrl;
     }
 
-    public boolean isAccepted() {
+    public boolean getIsAccepted() {
         return isAccepted;
     }
 
-    public void setAccepted(boolean accepted) {
+    public void setIsAccepted(boolean accepted) {
         isAccepted = accepted;
     }
 
     public ArrayList<Assignment> getAssignments() {
         return assignments;
+//        return null;
     }
 
     public void setAssignments(ArrayList<Assignment> assignments) {
