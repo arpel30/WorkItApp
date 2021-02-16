@@ -33,6 +33,10 @@ public class MyFragment extends Fragment {
         return null;
     }
 
+    protected void removeListeners(){
+
+    }
+
     protected void setImage(int id, ImageView view){
         Glide
                 .with(this)

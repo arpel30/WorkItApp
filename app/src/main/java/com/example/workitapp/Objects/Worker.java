@@ -1,11 +1,13 @@
 package com.example.workitapp.Objects;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Worker {
@@ -16,9 +18,11 @@ public class Worker {
     private String imgUrl;
     private boolean isAccepted;
     ArrayList<Assignment> assignments;
+    //    HashMap<String, Assignment> assignments;
     private int assignmentsDoneAll;
     private int assignmentsDoneWeek;
     private String startDate;
+    private String uid;
 
 
     public Worker() {
@@ -33,15 +37,15 @@ public class Worker {
     }
 
     public Worker(String name, String email, String password, int divisionID) {
-        assignments  = new ArrayList<>();
+//        assignments  = new ArrayList<>();
         this.name = name;
         this.email = email;
         this.divisionID = divisionID;
         this.imgUrl = "default";
         this.isAccepted = false;
         this.password = password;
-        this.assignmentsDoneAll=0;
-        this.assignmentsDoneWeek=0;
+        this.assignmentsDoneAll = 0;
+        this.assignmentsDoneWeek = 0;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startDate = LocalDate.now().toString();
         }
@@ -66,9 +70,17 @@ public class Worker {
     @Override
     public boolean equals(@Nullable Object obj) {
         if (obj != null && obj instanceof Worker) {
-            return this.email == ((Worker) obj).getEmail();
+            return this.uid == ((Worker) obj).getUid();
         }
         return false;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getStartDate() {
@@ -151,4 +163,30 @@ public class Worker {
     public void setAssignments(ArrayList<Assignment> assignments) {
         this.assignments = assignments;
     }
+
+    public void addAssignment(Assignment a) {
+        if (assignments == null) {
+//            assignments = new HashMap<>();
+            assignments = new ArrayList<>();
+        }
+//        assignments.put(assignments.size() + "", a);
+        assignments.add(a);
+    }
+
+//    public ArrayList<Assignment> getAssignments() {
+//        if (assignments == null) {
+//            return null;
+//        }
+//        ArrayList<Assignment> list = new ArrayList<Assignment>(assignments.values());
+//        return list;
+////        return null;
+//    }
+//
+//    public void setAssignments(ArrayList<Assignment> a) {
+//        assignments = new HashMap<>();
+//        for (Assignment assignment : a) {
+//            assignments.put(a.indexOf(assignment) + "", assignment);
+//        }
+////        this.assignments = assignments;
+//    }
 }

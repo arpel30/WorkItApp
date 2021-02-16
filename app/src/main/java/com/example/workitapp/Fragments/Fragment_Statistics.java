@@ -1,51 +1,33 @@
 package com.example.workitapp.Fragments;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.workitapp.Adapter_Requests;
 import com.example.workitapp.Adapter_Statistics;
-import com.example.workitapp.AssignmentMockDB;
-import com.example.workitapp.LabelFormatter;
 import com.example.workitapp.More.CompareByAssignmentsDoneWeekly;
 import com.example.workitapp.More.Constants;
 import com.example.workitapp.More.MyCallBack;
-import com.example.workitapp.Objects.Assignment;
 import com.example.workitapp.Objects.Manager;
 import com.example.workitapp.Objects.MyFirebase;
-import com.example.workitapp.Objects.MySPV;
-import com.example.workitapp.Objects.Request;
 import com.example.workitapp.R;
 import com.example.workitapp.Objects.Worker;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,8 +38,6 @@ import com.vaibhavlakhera.circularprogressview.CircularProgressView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.RandomAccess;
 
 public class Fragment_Statistics extends MyFragment {
 
@@ -85,6 +65,10 @@ public class Fragment_Statistics extends MyFragment {
     private Adapter_Statistics adapter_statistics;
     private ArrayList<Worker> workers = new ArrayList<>();
 
+    private ValueEventListener workerChangedListener;
+    private ValueEventListener managerChangedListener;
+    private ValueEventListener divisionChangedListener;
+
     public void setCallBack(MyCallBack _callBack) {
         this.callBack = _callBack;
     }
@@ -95,6 +79,7 @@ public class Fragment_Statistics extends MyFragment {
         view = inflater.inflate(R.layout.fragment_statistics, container, false);
         context = view.getContext();
         findViews();
+        initListeners();
         getWorkers2();
 //        workers = new ArrayList<>();
 //        Log.d("aaa", workers.toString());
@@ -106,20 +91,27 @@ public class Fragment_Statistics extends MyFragment {
         return view;
     }
 
-    private void getWorkers2() {
-        user = MyFirebase.getInstance().getUser();
-        if (user != null) {
-            getWorker(user.getUid(), Constants.MANAGER_ID);
-//            workers = new ArrayList<>();
-//            getDivision(manager.getDivisionID());
-        }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        removeListeners();
     }
 
-    public void getDivision(int division) {
-//        workers = new ArrayList<>();
-        DatabaseReference divRef = MyFirebase.getInstance().getFdb().getReference(Constants.DIVISION_PATH);
-        divRef = divRef.child(division + "");
-        divRef.addValueEventListener(new ValueEventListener() {
+    @Override
+    protected void removeListeners() {
+        MyFirebase.getInstance().getFdb().getReference().removeEventListener(workerChangedListener);
+        MyFirebase.getInstance().getFdb().getReference().removeEventListener(managerChangedListener);
+        MyFirebase.getInstance().getFdb().getReference().removeEventListener(divisionChangedListener);
+    }
+
+    private void initListeners() {
+        initWorkerListener();
+        initManagerListener();
+        initDivisionListener();
+    }
+
+    private void initDivisionListener() {
+        divisionChangedListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 workers = new ArrayList<>();
@@ -130,50 +122,82 @@ public class Fragment_Statistics extends MyFragment {
 //                for (String uid : uids) {
 //                    getWorker(uid);
 //                }
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
-        });
+        };
+    }
+
+    private void initManagerListener() {
+        managerChangedListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Worker tmpW = snapshot.getValue(Worker.class);
+                if(tmpW.getAssignments() == null)
+                    tmpW.setAssignments(new ArrayList<>());
+                getDivision(tmpW.getDivisionID());
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        };
+    }
+
+    private void initWorkerListener() {
+        workerChangedListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Worker tmpW = snapshot.getValue(Worker.class);
+                if(tmpW.getAssignments() == null)
+                    tmpW.setAssignments(new ArrayList<>());
+
+                if (workers.contains(tmpW)) {
+                    workers.remove(tmpW);
+                }
+                workers.add(tmpW);
+                workers.sort(new CompareByAssignmentsDoneWeekly());
+                initViews();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        };
+    }
+
+    private void getWorkers2() {
+        user = MyFirebase.getInstance().getUser();
+        if (user != null) {
+            getManager(user.getUid(), Constants.MANAGER_ID);
+//            workers = new ArrayList<>();
+//            getDivision(manager.getDivisionID());
+        }
+    }
+
+    public void getDivision(int division) {
+//        workers = new ArrayList<>();
+        DatabaseReference divRef = MyFirebase.getInstance().getFdb().getReference(Constants.DIVISION_PATH);
+        divRef = divRef.child(division + "");
+        divRef.addValueEventListener(divisionChangedListener);
     }
 
     private void getAllUids(Map<String, String> uids) {
         for (Map.Entry<String, String> entry : uids.entrySet()) {
             String uid = entry.getValue();
             Log.d("aaa", uid);
-            getWorker(uid, Constants.WORKER_ID);
+            DatabaseReference divRef = MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH);
+            divRef = divRef.child(uid);
+            divRef.addValueEventListener(workerChangedListener);
+//            getWorker(uid, Constants.WORKER_ID);
         }
     }
 
     // type 0-manager, 1 worker
-    public void getWorker(String uid, int type) {
+    public void getManager(String uid, int type) {
 //        final Worker[] worker = new Worker[1];
         DatabaseReference divRef = MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH);
         divRef = divRef.child(uid);
-        divRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                worker[0] = snapshot.getValue(Worker.class);
-                Worker tmpW = snapshot.getValue(Worker.class);
-                tmpW.setAssignments(new ArrayList<>());
-                if (type == Constants.WORKER_ID) {
-                    if (workers.contains(tmpW)) {
-                        workers.remove(tmpW);
-                    }
-                    workers.add(tmpW);
-                    workers.sort(new CompareByAssignmentsDoneWeekly());
-                    initViews();
-                } else if (type == Constants.MANAGER_ID) {
-                    getDivision(tmpW.getDivisionID());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+        divRef.addValueEventListener(managerChangedListener);
 //        return worker[0];
     }
 
@@ -262,11 +286,11 @@ public class Fragment_Statistics extends MyFragment {
             left += worker.getAssignments().size();
         }
         profile_PRB_left.setTotal(left);
-        profile_PRB_allTime.setTotal(allTime*100);
-        profile_PRB_week.setTotal(week*100+1000);
+        profile_PRB_allTime.setTotal(allTime * 100);
+        profile_PRB_week.setTotal(week * 100 + 1000);
         profile_PRB_left.setProgress(left, true);
-        profile_PRB_allTime.setProgress(allTime*40, true);
-        profile_PRB_week.setProgress(week*90, true);
+        profile_PRB_allTime.setProgress(allTime * 40, true);
+        profile_PRB_week.setProgress(week * 90, true);
 
     }
 

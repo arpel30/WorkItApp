@@ -7,20 +7,31 @@ import java.util.Date;
 
 public class Assignment {
     String title;
-    SimpleDateFormat format;
-    LocalDate dueTo;
+//    SimpleDateFormat format;
+    String dueTo;
     String description;
 
-    public Assignment(String title, LocalDate  dueTo, String description) {
+    public Assignment() {
+    }
+
+    public Assignment(String title, String  dueTo, String description) {
         this.title = title;
-        this.format = new SimpleDateFormat("dd/MM/yy");;
+//        this.format = new SimpleDateFormat("dd/MM/yy");;
         this.dueTo = dueTo;
         this.description = description;
     }
 
-    public SimpleDateFormat getFormat() {
-        return format;
+
+    public Assignment(String title, LocalDate  dueTo, String description) {
+        this.title = title;
+//        this.format = new SimpleDateFormat("dd/MM/yy");;
+        this.dueTo = dueTo.toString();
+        this.description = description;
     }
+
+//    public SimpleDateFormat getFormat() {
+//        return format;
+//    }
 
     public String getTitle() {
         return title;
@@ -30,12 +41,16 @@ public class Assignment {
         this.title = title;
     }
 
-    public LocalDate  getDueTo() {
+    public String getDueTo() {
         return dueTo;
     }
 
-    public void setDueTo(LocalDate dueTo) {
-        this.dueTo = dueTo;
+    public void setDueToLocalDate(LocalDate dueTo) {
+        this.dueTo = dueTo.toString();
+    }
+
+    public void setDueTo(String dueTo) {
+        this.dueTo = dueTo.toString();
     }
 
     public String getDescription() {

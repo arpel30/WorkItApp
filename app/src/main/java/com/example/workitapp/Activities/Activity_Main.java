@@ -20,6 +20,7 @@ import com.example.workitapp.More.Constants;
 import com.example.workitapp.Fragments.Fragment_Worker_Assignments;
 import com.example.workitapp.Fragments.Fragment_Requests;
 import com.example.workitapp.Fragments.Fragment_Statistics;
+import com.example.workitapp.Objects.MyFirebase;
 import com.example.workitapp.Objects.MySPV;
 import com.example.workitapp.Objects.Worker;
 import com.example.workitapp.R;
@@ -60,7 +61,7 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         main_NAV_navigation.setNavigationItemSelectedListener(this);
 
         // show home only if the app start now
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             main_NAV_navigation.setCheckedItem(R.id.menu_ITM_home);
 //                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Statistics()).commit();
         }
@@ -125,16 +126,14 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
 
     private void signOut() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
-        MySPV.getInstance().putBool(Constants.REMEMBER,false);
+        if (auth != null) {
+            FirebaseUser user = auth.getCurrentUser();
+            auth.signOut();
+        }
+        MySPV.getInstance().putBool(Constants.REMEMBER, false);
         Intent i = new Intent(Activity_Main.this, Activity_Login.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
         finish();
-//        if(user != null){
-//            openApp();
-//        }else{
-//            login();
-//        }
     }
 }
