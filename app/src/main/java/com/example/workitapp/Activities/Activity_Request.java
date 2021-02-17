@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.workitapp.More.Constants;
 import com.example.workitapp.Objects.MyFirebase;
+import com.example.workitapp.Objects.Request;
 import com.example.workitapp.R;
 import com.example.workitapp.Objects.Worker;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -62,6 +63,7 @@ public class Activity_Request extends Activity_Base {
 //                                ref = MyFirebase.getInstance().getFdb().getReference();
                                 ref = FirebaseDatabase.getInstance().getReference();
                                 ref.child(Constants.DIVISION_PATH).child(w.getDivisionID()+"").child(uid).setValue(uid);
+                                ref.child(Constants.REQUESTS_PATH).child(uid).setValue(new Request(uid));
                                 ref.child(Constants.WORKER_PATH).child(uid).setValue(w).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {

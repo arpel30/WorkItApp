@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.workitapp.Fragments.Fragment_Manager_Assignments;
 import com.example.workitapp.Fragments.Fragment_Profile;
+import com.example.workitapp.Fragments.Fragment_Unauthorized;
 import com.example.workitapp.More.Constants;
 import com.example.workitapp.Fragments.Fragment_Worker_Assignments;
 import com.example.workitapp.Fragments.Fragment_Requests;
@@ -27,6 +29,11 @@ import com.example.workitapp.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.EventListener;
 
 public class Activity_Main extends Activity_Base implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,9 +43,12 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
     private TextView header_LBL_email;
     private TextView header_LBL_name;
 
+    private ValueEventListener workerChanged;
+
     private androidx.appcompat.widget.Toolbar main_TLB_toolbar;
     private FrameLayout main_FRL_container;
     Worker w = new Worker("Arad Pelled", "ap@gmail.com", "aklaksk", 20);
+    private Worker currentWorker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +58,13 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         // init w from firebase
         findViews();
         initViews();
+        initListener();
+        getWorker();
         setSupportActionBar(main_TLB_toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         // hide or show items
-        Menu menu = main_NAV_navigation.getMenu();
-//        menu.findItem(R.id.menu_ITM_login).setVisible(false);
+//        showItems
+        hideItems();
 
         main_NAV_navigation.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, main_DRL_drawer, main_TLB_toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -63,14 +75,89 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         // show home only if the app start now
         if (savedInstanceState == null) {
             main_NAV_navigation.setCheckedItem(R.id.menu_ITM_home);
+//            getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Profile()).commit();
 //                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Statistics()).commit();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyFirebase.getInstance().getFdb().getReference().removeEventListener(workerChanged);
+    }
+
+    private void initListener() {
+        workerChanged = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                currentWorker = snapshot.getValue(Worker.class);
+                showItems();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+    }
+
+    private void hideItems() {
+        Menu menu = main_NAV_navigation.getMenu();
+        menu.findItem(R.id.menu_ITM_requests).setVisible(false);
+        menu.findItem(R.id.menu_ITM_home).setVisible(false);
+        menu.findItem(R.id.menu_ITM_stats).setVisible(false);
+        menu.findItem(R.id.menu_ITM_profile).setVisible(false);
+        menu.findItem(R.id.menu_ITM_assign).setVisible(false);
+    }
+
+    private void showItems() {
+        Menu menu = main_NAV_navigation.getMenu();
+        if (currentWorker != null) {
+            hideItems();
+            if (currentWorker.getIsAccepted()) {
+                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Profile()).commit();
+                switch (currentWorker.getType()) {
+                    case Constants.MANAGER_ID:
+                        menu.findItem(R.id.menu_ITM_stats).setVisible(true);
+                        menu.findItem(R.id.menu_ITM_assign).setVisible(true);
+                        menu.findItem(R.id.menu_ITM_profile).setVisible(true);
+                        break;
+                    case Constants.WORKER_ID:
+                        menu.findItem(R.id.menu_ITM_assign).setVisible(true);
+                        menu.findItem(R.id.menu_ITM_profile).setVisible(true);
+                        break;
+                    case Constants.HR_ID:
+                        menu.findItem(R.id.menu_ITM_assign).setVisible(true);
+                        menu.findItem(R.id.menu_ITM_requests).setVisible(true);
+                        menu.findItem(R.id.menu_ITM_profile).setVisible(true);
+                        break;
+                }
+//                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Profile()).commit();
+            } else {
+                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Unauthorized()).commit();
+            }
+        }
+//        menu.findItem(R.id.menu_ITM_login).setVisible(false);
     }
 
     private void initViews() {
         setImage(R.drawable.unauth_pic, header_IMG_profile);
         header_LBL_email.setText(w.getEmail());
         header_LBL_name.setText(w.getName());
+
+    }
+
+    private void getWorker() {
+        Log.d("aaa", "bef");
+        FirebaseUser user = MyFirebase.getInstance().getUser();
+        Log.d("aaa", "" + user);
+        String uid = null;
+        if (user != null)
+            uid = user.getUid();
+        Log.d("aaa", "" + uid);
+        if (uid != null) {
+            MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(uid).addValueEventListener(workerChanged);
+        }
     }
 
     @Override
@@ -95,6 +182,16 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        openFragment(item);
+        main_DRL_drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void openFragment(MenuItem item) {
+        if (!currentWorker.getIsAccepted()) {
+
+        }
+
         switch (item.getItemId()) {
             case R.id.menu_ITM_home:
 //                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Statistics()).commit();
@@ -120,8 +217,6 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
                 break;
 
         }
-        main_DRL_drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
     private void signOut() {

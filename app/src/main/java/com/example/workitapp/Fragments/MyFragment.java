@@ -33,9 +33,13 @@ public class MyFragment extends Fragment {
         return null;
     }
 
-    protected void removeListeners(){
+    protected void removeListeners(){}
 
-    }
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        removeListeners();
+//    }
 
     protected void setImage(int id, ImageView view){
         Glide

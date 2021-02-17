@@ -5,6 +5,8 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.workitapp.More.Constants;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +25,7 @@ public class Worker {
     private int assignmentsDoneWeek;
     private String startDate;
     private String uid;
+    private int type;
 
 
     public Worker() {
@@ -49,6 +52,7 @@ public class Worker {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startDate = LocalDate.now().toString();
         }
+        this.type = Constants.WORKER_ID;
     }
 
     @Override
@@ -70,9 +74,17 @@ public class Worker {
     @Override
     public boolean equals(@Nullable Object obj) {
         if (obj != null && obj instanceof Worker) {
-            return this.uid == ((Worker) obj).getUid();
+            return this.uid.equals(((Worker) obj).getUid());
         }
         return false;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getUid() {

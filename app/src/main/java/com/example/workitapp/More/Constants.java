@@ -8,7 +8,9 @@ public class Constants {
     public static final String UID = "REMEMEBRED_UID"; // key to the remembered user id
     public static final String DIVISION_PATH = "Divisions";
     public static final String WORKER_PATH = "Workers";
+    public static final String REQUESTS_PATH = "Requests";
     public static final String ASSIGNMENTS = "assignments";
+    public static final String IS_ACCEPTED = "isAccepted";
 
     public static final int MANAGER_ID = 0;
     public static final int WORKER_ID = 1;

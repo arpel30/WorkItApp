@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context=".Activities.Activity_Unauthorized"
     android:layoutDirection="ltr">
 
     <TextView
@@ -25,6 +22,7 @@
         />
 
     <ImageView
+        android:id="@+id/unauth_IMG_meme"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -35,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
-        android:text="Your Request Is Still\nWaiting For HR Approval"
+        android:text="@string/REQUEST_WAITING"
         android:lines="2"
         android:autoSizeTextType="uniform"
         android:autoSizeMaxTextSize="40sp"

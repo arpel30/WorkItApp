@@ -18,13 +18,15 @@ import java.util.List;
 
 public class Adapter_Requests extends RecyclerView.Adapter<Adapter_Requests.MyViewHolder> {
     private List<Request> requests;
+    private List<Worker> workers;
     private LayoutInflater mInflater;
     private MyItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public Adapter_Requests(Context context, List<Request> _requests) {
+    public Adapter_Requests(Context context, List<Request> _requests, List<Worker> _workers) {
         this.mInflater = LayoutInflater.from(context);
         this.requests = _requests;
+        this.workers = _workers;
     }
 
     // inflates the row layout from xml when needed
@@ -39,9 +41,17 @@ public class Adapter_Requests extends RecyclerView.Adapter<Adapter_Requests.MyVi
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Log.d("pttt", "Position = " + position);
         Request r = requests.get(position);
-        holder.requestItem_LBL_title.setText(r.getWorker().getName());
-        holder.requestItem_LBL_id.setText("Division " + r.getWorker().getDivisionID());
+        Worker tmp = new Worker();
+        tmp.setUid(r.getUid());
+        Log.d("aaa",workers.toString());
+        Log.d("aaa",requests.toString());
 
+        int index = workers.indexOf(tmp);
+        if(index >= 0) {
+            tmp = workers.get(index);
+            holder.requestItem_LBL_title.setText(tmp.getName());
+            holder.requestItem_LBL_id.setText("Division " + tmp.getDivisionID());
+        }
 //        holder.assignItemW_LAY_item.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

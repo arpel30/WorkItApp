@@ -116,13 +116,14 @@ public class Fragment_Statistics extends MyFragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 workers = new ArrayList<>();
                 getAllUids((Map<String, String>) snapshot.getValue());
-//                Log.d("aaa", "hello");
+                Log.d("aaa", "hello");
 //                String[] uids = snapshot.getValue(String[].class);
 //                Log.d("aaa", uids.toString());
 //                for (String uid : uids) {
 //                    getWorker(uid);
 //                }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -134,10 +135,11 @@ public class Fragment_Statistics extends MyFragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Worker tmpW = snapshot.getValue(Worker.class);
-                if(tmpW.getAssignments() == null)
+                if (tmpW.getAssignments() == null)
                     tmpW.setAssignments(new ArrayList<>());
                 getDivision(tmpW.getDivisionID());
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -149,16 +151,20 @@ public class Fragment_Statistics extends MyFragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Worker tmpW = snapshot.getValue(Worker.class);
-                if(tmpW.getAssignments() == null)
+                if (tmpW.getAssignments() == null)
                     tmpW.setAssignments(new ArrayList<>());
-
-                if (workers.contains(tmpW)) {
-                    workers.remove(tmpW);
+//                Log.d("aaa", "uid : " + tmpW.getUid());
+                if (!workers.contains(tmpW)) {
+                    Log.d("aaa", "not Contains " + tmpW.getName());
+//                    workers.remove(tmpW);
+                    workers.add(tmpW);
+                } else {
+                    Log.d("aaa", "Contains " + tmpW.getName());
                 }
-                workers.add(tmpW);
                 workers.sort(new CompareByAssignmentsDoneWeekly());
                 initViews();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }

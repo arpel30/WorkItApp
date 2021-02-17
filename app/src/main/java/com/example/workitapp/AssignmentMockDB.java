@@ -33,14 +33,14 @@ public class AssignmentMockDB {
 
     public static ArrayList<Request> generateReqs() {
         ArrayList<Request> requests = new ArrayList<>();
-        requests.add(new Request(new Worker("Arad", "aea","aaa",10)));
-        requests.add(new Request(new Worker("Avi", "aea","aaa",10)));
-        requests.add(new Request(new Worker("Moshe", "moshelevi123@gmail.com","aaa",10)));
-        requests.add(new Request(new Worker("Nemo", "aea","aaa",10)));
-        requests.add(new Request(new Worker("Levi", "aea","aaa",10)));
-        requests.add(new Request(new Worker("Omri", "aea","aaa",10)));
-        requests.add(new Request(new Worker("Roni", "aea","aaa",10)));
-        requests.add(new Request(new Worker("Menashe", "aea","aaa",10)));
+//        requests.add(new Request(new Worker("Arad", "aea","aaa",10)));
+//        requests.add(new Request(new Worker("Avi", "aea","aaa",10)));
+//        requests.add(new Request(new Worker("Moshe", "moshelevi123@gmail.com","aaa",10)));
+//        requests.add(new Request(new Worker("Nemo", "aea","aaa",10)));
+//        requests.add(new Request(new Worker("Levi", "aea","aaa",10)));
+//        requests.add(new Request(new Worker("Omri", "aea","aaa",10)));
+//        requests.add(new Request(new Worker("Roni", "aea","aaa",10)));
+//        requests.add(new Request(new Worker("Menashe", "aea","aaa",10)));
         return requests;
     }
 }
