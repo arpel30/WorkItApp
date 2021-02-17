@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +24,7 @@ public class MyFirebase {
     private FirebaseAuth auth;
     private FirebaseDatabase fdb;
     private FirebaseUser user;
+    private FirebaseStorage fst;
     private ArrayList<Worker> workers;
     private Worker worker;
 
@@ -30,6 +32,7 @@ public class MyFirebase {
     private MyFirebase(Context context) {
         fdb = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
+        fst = FirebaseStorage.getInstance();
         if (auth != null)
             user = auth.getCurrentUser();
     }
@@ -54,5 +57,9 @@ public class MyFirebase {
 
     public FirebaseUser getUser() {
         return user;
+    }
+
+    public FirebaseStorage getFst() {
+        return fst;
     }
 }

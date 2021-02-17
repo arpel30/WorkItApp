@@ -16,4 +16,8 @@ public class Constants {
     public static final int WORKER_ID = 1;
     public static final int HR_ID = 2;
 
+    public static final int MY_CAMERA_REQUEST_CODE = 100;
+    public static final int READ_EXTERNAL_STORAGE_CODE = 101;
+
+    public static final String PROFILE_FOLDER = "profile_pics/";
 }

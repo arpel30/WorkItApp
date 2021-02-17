@@ -34,6 +34,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.firebase:firebase-auth:20.0.1'
+    implementation 'com.google.firebase:firebase-storage:19.2.1'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -64,5 +65,9 @@ dependencies {
 
     // Charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // image picker
+    implementation 'com.github.Drjacky:ImagePicker:1.7.10'
+    implementation 'com.android.support:multidex:1.0.3'
 
 }
