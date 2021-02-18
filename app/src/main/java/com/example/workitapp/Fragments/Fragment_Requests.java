@@ -27,6 +27,7 @@ import com.example.workitapp.More.Constants;
 import com.example.workitapp.More.MyCallBack;
 import com.example.workitapp.Objects.Assignment;
 import com.example.workitapp.Objects.MyFirebase;
+import com.example.workitapp.Objects.MySPV;
 import com.example.workitapp.Objects.Request;
 import com.example.workitapp.R;
 import com.example.workitapp.Objects.Worker;
@@ -299,7 +300,7 @@ public class Fragment_Requests extends MyFragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, tmp.getName() + "Approved !", Toast.LENGTH_SHORT).show();
-                answerReq(r.getUid(), true);
+                answerReq(r.getUid(), true, r, tmp.getDivisionID());
                 mDialog.dismiss();
             }
         });
@@ -307,7 +308,7 @@ public class Fragment_Requests extends MyFragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, tmp.getName() + "Declined.", Toast.LENGTH_SHORT).show();
-                answerReq(r.getUid(), false);
+                answerReq(r.getUid(), false, r, tmp.getDivisionID());
                 mDialog.dismiss();
             }
         });
@@ -315,14 +316,15 @@ public class Fragment_Requests extends MyFragment {
 
     }
 
-    private void answerReq(String uid, boolean answer) {
+    private void answerReq(String uid, boolean answer, Request r, int division) {
         MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(uid).child(Constants.IS_ACCEPTED).setValue(answer).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     removeRquest(uid);
-                    if(!answer)
-                        removeWorker(uid);
+                    removeFromRecycler(r);
+                    if(answer)
+                        addWorkerToDivision(uid, division);
                 } else {
                     Toast.makeText(context, "Cannot Assign.", Toast.LENGTH_SHORT).show();
                 }
@@ -331,15 +333,25 @@ public class Fragment_Requests extends MyFragment {
         });
     }
 
-    private void removeWorker(String uid) {
-        MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(uid).removeValue();
+    private void addWorkerToDivision(String uid, int division) {
+        MyFirebase.getInstance().getFdb().getReference().child(Constants.DIVISION_PATH).child(division+"").child(uid).setValue(uid);
+    }
+
+    private void removeFromRecycler(Request r) {
+        int position = requests.indexOf(r);
+        requests.remove(r);
+        requests_LST_requests.removeViewAt(position);
+        adapter_requests.notifyItemRemoved(position);
+        adapter_requests.notifyItemRangeChanged(position, requests.size());
+        adapter_requests.notifyDataSetChanged();    }
+
+    private void removeWorker(String uid, int division) {
+//        MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(uid).removeValue();
+//        MyFirebase.getInstance().getFdb().getReference(Constants.DIVISION_PATH).child(division+"").child(uid).removeValue();
     }
 
     private void removeRquest(String uid) {
         MyFirebase.getInstance().getFdb().getReference(Constants.REQUESTS_PATH).child(uid).removeValue();
-    }
-
-    private void approveReq(String uid) {
     }
 
     private List<String> getNames(ArrayList<Worker> workers) {

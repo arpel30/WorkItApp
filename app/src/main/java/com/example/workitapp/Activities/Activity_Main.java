@@ -33,6 +33,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
 import java.util.EventListener;
 
 public class Activity_Main extends Activity_Base implements NavigationView.OnNavigationItemSelectedListener {
@@ -80,11 +81,11 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        MyFirebase.getInstance().getFdb().getReference().removeEventListener(workerChanged);
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        MyFirebase.getInstance().getFdb().getReference().removeEventListener(workerChanged);
+//    }
 
     private void initListener() {
         workerChanged = new ValueEventListener() {
@@ -204,7 +205,10 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
                 getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Statistics()).commit();
                 break;
             case R.id.menu_ITM_assign:
-                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Worker_Assignments()).commit();
+                if (currentWorker.getType() == Constants.MANAGER_ID)
+                    getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Manager_Assignments()).commit();
+                else
+                    getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Worker_Assignments()).commit();
                 break;
             case R.id.menu_ITM_requests:
                 getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Requests()).commit();
@@ -220,12 +224,16 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
     }
 
     private void signOut() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        MyFirebase.getInstance().getFdb().getReference().removeEventListener(workerChanged);
+        FirebaseAuth auth = MyFirebase.getInstance().getAuth();
         if (auth != null) {
             FirebaseUser user = auth.getCurrentUser();
             auth.signOut();
-        }
+            Log.d("aaa", "Signed Out.");
+        } else
+            Log.d("aaa", "Didn't Signed Out.");
         MySPV.getInstance().putBool(Constants.REMEMBER, false);
+        MySPV.getInstance().removeKey(Constants.UID);
         Intent i = new Intent(Activity_Main.this, Activity_Login.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);

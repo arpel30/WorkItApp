@@ -62,7 +62,6 @@ public class Activity_Request extends Activity_Base {
 
 //                                ref = MyFirebase.getInstance().getFdb().getReference();
                                 ref = FirebaseDatabase.getInstance().getReference();
-                                ref.child(Constants.DIVISION_PATH).child(w.getDivisionID()+"").child(uid).setValue(uid);
                                 ref.child(Constants.REQUESTS_PATH).child(uid).setValue(new Request(uid));
                                 ref.child(Constants.WORKER_PATH).child(uid).setValue(w).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override

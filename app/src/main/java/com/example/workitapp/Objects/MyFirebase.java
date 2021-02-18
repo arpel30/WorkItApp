@@ -56,7 +56,7 @@ public class MyFirebase {
     }
 
     public FirebaseUser getUser() {
-        return user;
+        return auth.getCurrentUser();
     }
 
     public FirebaseStorage getFst() {
