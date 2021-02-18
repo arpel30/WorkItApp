@@ -33,9 +33,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import java.time.LocalDate;
-import java.util.EventListener;
-
 public class Activity_Main extends Activity_Base implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout main_DRL_drawer;
@@ -58,7 +55,6 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
 
         // init w from firebase
         findViews();
-        initViews();
         initListener();
         getWorker();
         setSupportActionBar(main_TLB_toolbar);
@@ -93,6 +89,7 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 currentWorker = snapshot.getValue(Worker.class);
                 showItems();
+                initViews();
             }
 
             @Override
@@ -116,7 +113,7 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         if (currentWorker != null) {
             hideItems();
             if (currentWorker.getIsAccepted()) {
-                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Profile()).commit();
+                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Profile()).commitAllowingStateLoss();
                 switch (currentWorker.getType()) {
                     case Constants.MANAGER_ID:
                         menu.findItem(R.id.menu_ITM_stats).setVisible(true);
@@ -142,10 +139,12 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
     }
 
     private void initViews() {
-        setImage(R.drawable.unauth_pic, header_IMG_profile);
-        header_LBL_email.setText(w.getEmail());
-        header_LBL_name.setText(w.getName());
-
+        if (!currentWorker.getImgUrl().equals(Constants.DEFAULT))
+            setImage(currentWorker.getImgUrl(), header_IMG_profile);
+        else
+            header_IMG_profile.setImageResource(Constants.PROFILE_DEFAULT); // vector drawable
+        header_LBL_email.setText(currentWorker.getEmail());
+        header_LBL_name.setText(currentWorker.getName());
     }
 
     private void getWorker() {

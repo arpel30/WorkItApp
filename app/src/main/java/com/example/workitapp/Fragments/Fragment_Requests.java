@@ -83,6 +83,7 @@ public class Fragment_Requests extends MyFragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        Log.d("aaa","removed");
         removeListeners();
     }
 
@@ -90,6 +91,7 @@ public class Fragment_Requests extends MyFragment {
     protected void removeListeners() {
         MyFirebase.getInstance().getFdb().getReference().removeEventListener(workerChangedListener);
         MyFirebase.getInstance().getFdb().getReference().removeEventListener(requestsChangedListener);
+        Log.d("aaa","removed");
 //        MyFirebase.getInstance().getFdb().getReference().removeEventListener(divisionChangedListener);
     }
 

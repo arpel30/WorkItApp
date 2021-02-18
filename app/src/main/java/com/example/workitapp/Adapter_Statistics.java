@@ -12,6 +12,7 @@ import androidx.databinding.adapters.ImageViewBindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.workitapp.More.Constants;
 import com.example.workitapp.Objects.Assignment;
 import com.example.workitapp.Objects.Worker;
 
@@ -44,10 +45,15 @@ public class Adapter_Statistics extends RecyclerView.Adapter<Adapter_Statistics.
         Worker w = workers.get(position);
         holder.statItem_LBL_name.setText(w.getName());
         holder.statItem_LBL_count.setText("" + w.getAssignmentsDoneWeek());
-        Glide
-                .with(mInflater.getContext())
-                .load(R.drawable.unauth_pic)
-                .into(holder.statItem_IMG_pic);
+        if (!w.getImgUrl().equals(Constants.DEFAULT))
+            Glide
+                    .with(mInflater.getContext())
+                    .load(w.getImgUrl())
+                    .fitCenter()
+                    .into(holder.statItem_IMG_pic);
+        else
+            holder.statItem_IMG_pic.setImageResource(Constants.PROFILE_DEFAULT); // vector drawable
+
 
 //        glide : holder.statItem_IMG_pic
 
@@ -82,7 +88,6 @@ public class Adapter_Statistics extends RecyclerView.Adapter<Adapter_Statistics.
 //        void onItemClicked(View v, int a); // open popup
 //        void onFinishAssignment(View v, Assignment a); // finish assignment
     }
-
 
 
     // stores and recycles views as they are scrolled off screen

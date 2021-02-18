@@ -1,5 +1,7 @@
 package com.example.workitapp.More;
 
+import com.example.workitapp.R;
+
 public class Constants {
 
 
@@ -20,4 +22,6 @@ public class Constants {
     public static final int READ_EXTERNAL_STORAGE_CODE = 101;
 
     public static final String PROFILE_FOLDER = "profile_pics/";
+    public static final String DEFAULT = "default";
+    public static final int PROFILE_DEFAULT = R.drawable.profile_icon;
 }

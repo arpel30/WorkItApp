@@ -58,9 +58,13 @@ public class Fragment_Profile extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
         context = view.getContext();
+        Log.d("aaa","find");
         findViews();
+        Log.d("aaa","find");
         getWorkers();
+        Log.d("aaa","find");
         initViews();
+        Log.d("aaa","find");
         return view;
     }
 
