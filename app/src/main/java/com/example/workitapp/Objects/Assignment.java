@@ -46,6 +46,15 @@ public class Assignment {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "Assignment{" +
+                "title='" + title + '\'' +
+                ", dueTo='" + dueTo + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
     public String getTitle() {
         return title;
     }

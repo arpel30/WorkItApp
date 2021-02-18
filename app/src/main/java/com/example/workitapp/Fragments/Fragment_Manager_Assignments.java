@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +44,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.webianks.library.scroll_choice.ScrollChoice;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -230,7 +234,7 @@ public class Fragment_Manager_Assignments extends MyFragment {
         for (Map.Entry<String, String> entry : uids.entrySet()) {
             String uid = entry.getValue();
             allUids.add(uid);
-            if(!uid.equals(manager.getUid())) {
+            if (!uid.equals(manager.getUid())) {
                 Log.d("aaa", "the uid : " + uid);
                 DatabaseReference divRef = MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH);
                 divRef = divRef.child(uid);
@@ -318,9 +322,6 @@ public class Fragment_Manager_Assignments extends MyFragment {
         });
     }
 
-    private void addAssignment() {
-    }
-
     private void openInfo(Assignment assignment) {
         mDialog.setContentView(R.layout.popup_assignment_m);
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
@@ -365,9 +366,14 @@ public class Fragment_Manager_Assignments extends MyFragment {
     private void newAssignment() {
         newAssignmentDialog.setContentView(R.layout.popup_new_assignment);
         newAssignmentDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+
         TextInputLayout popupNA_TIL_title = newAssignmentDialog.findViewById(R.id.popupNA_TIL_title);
-        TextInputLayout popupAW_LBL_description = newAssignmentDialog.findViewById(R.id.popupAW_LBL_description);
-        TextView popupNA_LBL_date = newAssignmentDialog.findViewById(R.id.popupNA_LBL_date);
+        TextInputLayout popupNA_TIL_description = newAssignmentDialog.findViewById(R.id.popupNA_TIL_description);
+
+        TextInputLayout popupNA_TIL_day = newAssignmentDialog.findViewById(R.id.popupNA_TIL_day);
+        TextInputLayout popupNA_TIL_month = newAssignmentDialog.findViewById(R.id.popupNA_TIL_month);
+        TextInputLayout popupNA_TIL_year = newAssignmentDialog.findViewById(R.id.popupNA_TIL_year);
+
         Button popupNA_BTN_Add = newAssignmentDialog.findViewById(R.id.popupNA_BTN_Add);
         Button popupNA_BTN_cancel = newAssignmentDialog.findViewById(R.id.popupNA_BTN_cancel);
 
@@ -382,6 +388,13 @@ public class Fragment_Manager_Assignments extends MyFragment {
         popupNA_BTN_Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Assignment newA = checkInput(popupNA_TIL_title.getEditText().getText().toString(),
+                        popupNA_TIL_description.getEditText().getText().toString(), popupNA_TIL_day.getEditText().getText().toString(),
+                        popupNA_TIL_month.getEditText().getText().toString(), popupNA_TIL_year.getEditText().getText().toString());
+                if (newA != null)
+                    addAssignment(newA);
+                newAssignmentDialog.dismiss();
+//                    Log.d("aaa", newA.toString());
 //                sendAssignmentToWorker(assignment, selectedWorker);
 //                removeAssignment(assignment);
 //                updateViews();
@@ -390,6 +403,50 @@ public class Fragment_Manager_Assignments extends MyFragment {
             }
         });
         newAssignmentDialog.show();
+
+    }
+
+    private Assignment checkInput(String title, String description, String day, String month, String year) {
+        Assignment a = new Assignment();
+        if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description) || TextUtils.isEmpty(day) || TextUtils.isEmpty(month) || TextUtils.isEmpty(year)) {
+            Toast.makeText(context, "Please Fill All Fields", Toast.LENGTH_SHORT).show();
+        } else {
+            int dayVal = checkNumericVal(day);
+            int monthVal = checkNumericVal(month);
+            int yearVal = checkNumericVal(year);
+            if (dayVal != -1 && monthVal != -1 && yearVal != -1) {
+                try {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        LocalDate ld = LocalDate.of(yearVal, monthVal, dayVal);
+                        a.setDescription(description);
+                        a.setTitle(title);
+                        a.setDueTo(ld.toString());
+                        return a;
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(context, "Date is not valid!", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(context, "Date elements must be numbers !", Toast.LENGTH_SHORT).show();
+            }
+        }
+        return null;
+    }
+
+    // if string is an integer and between min & max - return numeric value, else return -1
+    private int checkNumericVal(String s) {
+        int val;
+        try {
+            val = Integer.parseInt(s);
+            return val;
+        } catch (NumberFormatException e) {
+        }
+        return -1;
+    }
+
+    private void addAssignment(Assignment assignment) {
+        manager.getAssignments().add(assignment);
+        MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(manager.getUid()).setValue(manager);
 
     }
 

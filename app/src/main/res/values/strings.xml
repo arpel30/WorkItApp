@@ -39,4 +39,7 @@
     <string name="REQUEST_WAITING">Your Request Is Still\nWaiting For HR Approval</string>
     <string name="TITLE">TITLE</string>
     <string name="DESCRIPTION">Description</string>
+    <string name="DAY">Day</string>
+    <string name="YEAR">Year</string>
+    <string name="MONTH">Month</string>
 </resources>

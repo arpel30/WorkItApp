@@ -47,11 +47,11 @@
         android:background="@color/DARK_RED" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/popupAW_LBL_description"
+        android:id="@+id/popupNA_TIL_description"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
-        android:layout_marginTop="25dp"
+        android:layout_weight="4"
+        android:layout_marginTop="5dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
         app:boxCornerRadiusBottomStart="12dp"
@@ -81,22 +81,122 @@
             android:gravity="center"
             android:autoSizeTextType="uniform"
             android:textColor="@color/black"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/popupNA_LBL_date"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="20/2/2021"
-        android:textSize="15sp"
-        android:gravity="center"
-        android:layout_marginTop="18dp"
-        />
+        android:layout_weight="2"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/popupNA_TIL_day"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:placeholderText="**"
+            app:placeholderTextColor="@color/DARK_GREY"
+            app:boxStrokeColor="@color/DARK_RED"
+            android:hint="@string/DAY"
+            app:hintTextColor="@color/DARK_RED"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:maxLength="2"
+                android:lines="1"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="40dp"
+                android:textColor="@color/black"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/popupNA_TIL_month"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            android:hint="@string/MONTH"
+            app:placeholderTextColor="@color/DARK_GREY"
+            app:boxStrokeColor="@color/DARK_RED"
+            app:placeholderText="**"
+            app:hintTextColor="@color/DARK_RED"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:maxLength="2"
+                android:lines="1"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="40dp"
+                android:textColor="@color/black"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/popupNA_TIL_year"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:layout_margin="5dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:placeholderText="****"
+            app:placeholderTextColor="@color/DARK_GREY"
+            app:boxStrokeColor="@color/DARK_RED"
+            android:hint="@string/YEAR"
+            app:hintTextColor="@color/DARK_RED"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:maxLength="4"
+                android:lines="1"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="40dp"
+                android:textColor="@color/black"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
     <LinearLayout
         android:showDividers="middle"
         android:divider="@drawable/white_divider"
