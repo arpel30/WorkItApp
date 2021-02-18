@@ -19,12 +19,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workitapp.Adapter_AssignmentW;
 import com.example.workitapp.AssignmentMockDB;
+import com.example.workitapp.More.Constants;
 import com.example.workitapp.More.MyCallBack;
 import com.example.workitapp.Objects.Assignment;
+import com.example.workitapp.Objects.MyFirebase;
 import com.example.workitapp.R;
 import com.example.workitapp.Objects.Worker;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -38,6 +46,7 @@ public class Fragment_Worker_Assignments extends MyFragment {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("Workers");
     private Worker w;
+    private ValueEventListener workerChanged;
 
     private MyCallBack callBack;
 
@@ -54,13 +63,37 @@ public class Fragment_Worker_Assignments extends MyFragment {
         view = inflater.inflate(R.layout.fragment_worker_assignments, container, false);
         context = view.getContext();
         findViews();
-        initViews();
+        initListener();
+        getWorkers();
+//        initViews();
 
         return view;
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(w.getUid()).removeEventListener(workerChanged);
+    }
+
+    private void getWorkers() {
+
+        FirebaseUser user = MyFirebase.getInstance().getUser();
+        String uid = null;
+        if (user != null)
+            uid = user.getUid();
+        if (uid != null) {
+            MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(uid).addValueEventListener(workerChanged);
+        }
+
+//        w = new Worker("Moshe Levi", "moshelevi@gmail.com", "not", 12);
+//        w.setAssignments(AssignmentMockDB.generateMovies());
+    }
+
+
     private void initViews() {
-        assignments = AssignmentMockDB.generateMovies();
+//        assignments = AssignmentMockDB.generateMovies();
+        assignments = w.getAssignments();
         adapter_movie = new Adapter_AssignmentW(context, assignments);
 
         mDialog = new Dialog(context);
@@ -80,6 +113,32 @@ public class Fragment_Worker_Assignments extends MyFragment {
 
         assign_LST_assignments.setLayoutManager(new LinearLayoutManager(context));
         assign_LST_assignments.setAdapter(adapter_movie);
+    }
+
+    private void initListener() {
+        workerChanged = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                w = snapshot.getValue(Worker.class);
+//                showItems();
+//                Log.d("aaa", "listen : " + w.getImgUrl());
+                initViews();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+    }
+
+    private void removeAssignment(Assignment assignment) {
+        int position = assignments.indexOf(assignment);
+        assignments.remove(assignment);
+        assign_LST_assignments.removeViewAt(position);
+        adapter_movie.notifyItemRemoved(position);
+        adapter_movie.notifyItemRangeChanged(position, assignments.size());
+        adapter_movie.notifyDataSetChanged();
     }
 
     private void openInfo(Assignment assignment) {
@@ -108,12 +167,35 @@ public class Fragment_Worker_Assignments extends MyFragment {
         popupAW_BTN_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                removeAssignment(assignment);
+//                w.getAssignments().remove(assignment);
+                finishAssignment(assignment);
                 Toast.makeText(context, "Mission " + assignment.getTitle() + " is done !", Toast.LENGTH_SHORT).show();
                 mDialog.dismiss();
             }
         });
         mDialog.show();
 
+    }
+
+    private void finishAssignment(Assignment assignment) {
+        w.getAssignments().remove(assignment);
+        w.setAssignmentsDoneAll(w.getAssignmentsDoneAll()+1);
+        w.setAssignmentsDoneWeek(w.getAssignmentsDoneWeek()+1);
+        MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(w.getUid()).setValue(w).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+
+//                    Log.d("aaa", selectedWorker.getAssignments().size() + "");
+//                    getWorkers2();
+//                    removeAssignment(assignment);
+                } else {
+                    Toast.makeText(context, "Cannot Assign.", Toast.LENGTH_SHORT).show();
+                }
+                mDialog.dismiss();
+            }
+        });
     }
 
     private void findViews() {

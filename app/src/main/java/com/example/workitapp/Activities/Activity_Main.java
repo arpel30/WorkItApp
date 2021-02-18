@@ -72,7 +72,7 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         // show home only if the app start now
         if (savedInstanceState == null) {
             main_NAV_navigation.setCheckedItem(R.id.menu_ITM_home);
-//            getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Profile()).commit();
+            getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Profile()).commit();
 //                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Statistics()).commit();
         }
     }
@@ -89,6 +89,7 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 currentWorker = snapshot.getValue(Worker.class);
                 showItems();
+                Log.d("aaa", "Main : " + currentWorker.getUid());
                 initViews();
             }
 
@@ -113,7 +114,7 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         if (currentWorker != null) {
             hideItems();
             if (currentWorker.getIsAccepted()) {
-                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Profile()).commitAllowingStateLoss();
+//                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Profile()).commitAllowingStateLoss();
                 switch (currentWorker.getType()) {
                     case Constants.MANAGER_ID:
                         menu.findItem(R.id.menu_ITM_stats).setVisible(true);
@@ -132,7 +133,7 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
                 }
 //                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Profile()).commit();
             } else {
-                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Unauthorized()).commit();
+                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Unauthorized()).commitAllowingStateLoss();
             }
         }
 //        menu.findItem(R.id.menu_ITM_login).setVisible(false);
@@ -148,13 +149,10 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
     }
 
     private void getWorker() {
-        Log.d("aaa", "bef");
         FirebaseUser user = MyFirebase.getInstance().getUser();
-        Log.d("aaa", "" + user);
         String uid = null;
         if (user != null)
             uid = user.getUid();
-        Log.d("aaa", "" + uid);
         if (uid != null) {
             MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(uid).addValueEventListener(workerChanged);
         }
@@ -223,7 +221,7 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
     }
 
     private void signOut() {
-        MyFirebase.getInstance().getFdb().getReference().removeEventListener(workerChanged);
+        MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(currentWorker.getUid()).removeEventListener(workerChanged);
         FirebaseAuth auth = MyFirebase.getInstance().getAuth();
         if (auth != null) {
             FirebaseUser user = auth.getCurrentUser();

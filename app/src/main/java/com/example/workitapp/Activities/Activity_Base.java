@@ -82,7 +82,7 @@ public abstract class Activity_Base extends AppCompatActivity {
     public void setImage(int id, ImageView view) {
         // set image with glide
         Glide
-                .with(this)
+                .with(getApplicationContext())
                 .load(id)
                 .into(view);
     }
@@ -90,7 +90,7 @@ public abstract class Activity_Base extends AppCompatActivity {
     public void setImage(String uri, ImageView view) {
         // set image with glide
         Glide
-                .with(this)
+                .with(getApplicationContext())
                 .load(uri)
                 .fitCenter()
                 .into(view);

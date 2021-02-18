@@ -168,6 +168,10 @@ public class Worker {
     }
 
     public ArrayList<Assignment> getAssignments() {
+        if (assignments == null) {
+//            assignments = new HashMap<>();
+            assignments = new ArrayList<>();
+        }
         return assignments;
 //        return null;
     }

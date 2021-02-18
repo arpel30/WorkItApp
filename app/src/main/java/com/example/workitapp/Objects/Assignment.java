@@ -1,5 +1,7 @@
 package com.example.workitapp.Objects;
 
+import androidx.annotation.Nullable;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -32,6 +34,17 @@ public class Assignment {
 //    public SimpleDateFormat getFormat() {
 //        return format;
 //    }
+
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj != null && obj instanceof Assignment) {
+            return this.dueTo.equals(((Assignment) obj).getDueTo()) &&
+                    this.title.equals(((Assignment) obj).getTitle()) &&
+                    this.description.equals(((Assignment) obj).getDescription());
+        }
+        return false;
+    }
 
     public String getTitle() {
         return title;

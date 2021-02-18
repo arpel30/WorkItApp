@@ -56,7 +56,9 @@ public class Adapter_AssignmentW extends RecyclerView.Adapter<Adapter_Assignment
     // total number of rows
     @Override
     public int getItemCount() {
-        return assignments.size();
+        if(assignments != null)
+            return assignments.size();
+        return 0;
     }
 
     // convenience method for getting data at click position

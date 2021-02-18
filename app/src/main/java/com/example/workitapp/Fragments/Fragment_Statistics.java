@@ -58,7 +58,7 @@ public class Fragment_Statistics extends MyFragment {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("Workers");
     private Worker w;
-    private Manager manager;
+    private Worker manager;
 
     private MyCallBack callBack;
 
@@ -68,6 +68,8 @@ public class Fragment_Statistics extends MyFragment {
     private ValueEventListener workerChangedListener;
     private ValueEventListener managerChangedListener;
     private ValueEventListener divisionChangedListener;
+
+    ArrayList<String> allUids;
 
     public void setCallBack(MyCallBack _callBack) {
         this.callBack = _callBack;
@@ -99,9 +101,11 @@ public class Fragment_Statistics extends MyFragment {
 
     @Override
     protected void removeListeners() {
-        MyFirebase.getInstance().getFdb().getReference().removeEventListener(workerChangedListener);
-        MyFirebase.getInstance().getFdb().getReference().removeEventListener(managerChangedListener);
-        MyFirebase.getInstance().getFdb().getReference().removeEventListener(divisionChangedListener);
+        MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(manager.getUid()).removeEventListener(managerChangedListener);
+        MyFirebase.getInstance().getFdb().getReference(Constants.DIVISION_PATH).child(manager.getDivisionID() + "").removeEventListener(divisionChangedListener);
+        for (String uid : allUids) {
+            MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(uid).removeEventListener(workerChangedListener);
+        }
     }
 
     private void initListeners() {
@@ -135,6 +139,7 @@ public class Fragment_Statistics extends MyFragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Worker tmpW = snapshot.getValue(Worker.class);
+                manager = tmpW;
                 if (tmpW.getAssignments() == null)
                     tmpW.setAssignments(new ArrayList<>());
                 getDivision(tmpW.getDivisionID());
@@ -159,7 +164,9 @@ public class Fragment_Statistics extends MyFragment {
 //                    workers.remove(tmpW);
                     workers.add(tmpW);
                 } else {
+                    workers.remove(tmpW);
                     Log.d("aaa", "Contains " + tmpW.getName());
+                    workers.add(tmpW);
                 }
                 workers.sort(new CompareByAssignmentsDoneWeekly());
                 initViews();
@@ -188,9 +195,11 @@ public class Fragment_Statistics extends MyFragment {
     }
 
     private void getAllUids(Map<String, String> uids) {
+        allUids = new ArrayList<>();
         for (Map.Entry<String, String> entry : uids.entrySet()) {
             String uid = entry.getValue();
-            Log.d("aaa", uid);
+            allUids.add(uid);
+//            Log.d("aaa", uid);
             DatabaseReference divRef = MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH);
             divRef = divRef.child(uid);
             divRef.addValueEventListener(workerChangedListener);

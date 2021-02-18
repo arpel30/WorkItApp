@@ -24,4 +24,6 @@ public class Constants {
     public static final String PROFILE_FOLDER = "profile_pics/";
     public static final String DEFAULT = "default";
     public static final int PROFILE_DEFAULT = R.drawable.profile_icon;
+    public static final String IMG_URL = "imgUrl";
+    public static final String UNAUTH_TEXT = "Sorry, ";
 }

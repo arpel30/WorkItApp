@@ -65,11 +65,14 @@ public class Fragment_Manager_Assignments extends MyFragment {
     private ArrayList<Worker> workers = new ArrayList<>();
     private Worker selectedWorker;
 
-    private ValueEventListener assignmentsListener;
+    //    private ValueEventListener assignmentsListener;
     private ValueEventListener workerChangedListener;
     private ValueEventListener managerChangedListener;
     private ValueEventListener divisionChangedListener;
     private Adapter_AssignmentM.MyItemClickListener assignmentClickListener;
+
+    private Worker manager;
+    ArrayList<String> allUids;
 
 //    private ArrayList<Worker> workersNames = new ArrayList<>();
 
@@ -86,7 +89,7 @@ public class Fragment_Manager_Assignments extends MyFragment {
         initListeners();
         getWorkers2();
 //        getWorkers();
-        initViews();
+//        initViews();
         return view;
     }
 
@@ -98,41 +101,44 @@ public class Fragment_Manager_Assignments extends MyFragment {
 
     @Override
     protected void removeListeners() {
-        MyFirebase.getInstance().getFdb().getReference().removeEventListener(assignmentsListener);
-        MyFirebase.getInstance().getFdb().getReference().removeEventListener(workerChangedListener);
-        MyFirebase.getInstance().getFdb().getReference().removeEventListener(managerChangedListener);
-        MyFirebase.getInstance().getFdb().getReference().removeEventListener(divisionChangedListener);
+//        MyFirebase.getInstance().getFdb().getReference().removeEventListener(assignmentsListener);
+//        MyFirebase.getInstance().getFdb().getReference().removeEventListener(workerChangedListener);
+        MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(manager.getUid()).removeEventListener(managerChangedListener);
+        MyFirebase.getInstance().getFdb().getReference(Constants.DIVISION_PATH).child(manager.getDivisionID() + "").removeEventListener(divisionChangedListener);
+        for (String uid : allUids) {
+            MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(uid).removeEventListener(workerChangedListener);
+        }
     }
 
     private void initListeners() {
-        initAssignmentsListener();
+//        initAssignmentsListener();
         initWorkerListener();
         initManagerListener();
         initDivisionListener();
     }
 
-    private void initAssignmentsListener() {
-        assignmentsListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Log.d("aaa", snapshot.toString());
-//                Log.d("aaa", snapshot.getChildrenCount()+"");
-//                Log.d("aaa", snapshot.getChildren().toString());
-                ArrayList<Assignment> assi = new ArrayList<>();
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    Assignment a1 = ds.getValue(Assignment.class);
-//                    Log.d("aaa", "a1 = "+a1);
-//                    Log.d("aaa", "a1 = " + ds.getValue(Assignment.class));
-                    assi.add(a1);
-//            getWorker(uid, Constants.WORKER_ID);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        };
-    }
+//    private void initAssignmentsListener() {
+//        assignmentsListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+////                Log.d("aaa", snapshot.toString());
+////                Log.d("aaa", snapshot.getChildrenCount()+"");
+////                Log.d("aaa", snapshot.getChildren().toString());
+//                ArrayList<Assignment> assi = new ArrayList<>();
+//                for (DataSnapshot ds : snapshot.getChildren()) {
+//                    Assignment a1 = ds.getValue(Assignment.class);
+////                    Log.d("aaa", "a1 = "+a1);
+////                    Log.d("aaa", "a1 = " + ds.getValue(Assignment.class));
+//                    assi.add(a1);
+////            getWorker(uid, Constants.WORKER_ID);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//            }
+//        };
+//    }
 
     private void initDivisionListener() {
         divisionChangedListener = new ValueEventListener() {
@@ -159,10 +165,12 @@ public class Fragment_Manager_Assignments extends MyFragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Worker tmpW = snapshot.getValue(Worker.class);
+                manager = tmpW;
                 Log.d("aaa", tmpW.toString());
-                tmpW.setAssignments(new ArrayList<>());
+//                tmpW.setAssignments(new ArrayList<>());
                 Log.d("aaa", "aft");
                 workers = new ArrayList<>();
+                initViews();
                 getDivision(tmpW.getDivisionID());
             }
 
@@ -182,7 +190,7 @@ public class Fragment_Manager_Assignments extends MyFragment {
                 if (workers.contains(tmpW)) {
                     workers.remove(tmpW);
                 }
-                getAssignment(tmpW.getUid());
+//                getAssignment(tmpW.getUid());
                 workers.add(tmpW);
                 workers.sort(new CompareByAssignmentsDoneWeekly());
                 updateViews();
@@ -194,12 +202,12 @@ public class Fragment_Manager_Assignments extends MyFragment {
         };
     }
 
-    private void getAssignment(String uid) {
-        DatabaseReference divRef = MyFirebase.getInstance().getFdb().getReference(Constants.ASSIGNMENTS);
-        divRef = divRef.child(uid);
-        divRef.addValueEventListener(assignmentsListener);
-        Log.d("aaa", uid);
-    }
+//    private void getAssignment(String uid) {
+//        DatabaseReference divRef = MyFirebase.getInstance().getFdb().getReference(Constants.ASSIGNMENTS);
+//        divRef = divRef.child(uid);
+//        divRef.addValueEventListener(assignmentsListener);
+//        Log.d("aaa", uid);
+//    }
 
     private void getWorkers2() {
         user = MyFirebase.getInstance().getUser();
@@ -217,63 +225,17 @@ public class Fragment_Manager_Assignments extends MyFragment {
         divRef.addValueEventListener(divisionChangedListener);
     }
 
-//    private void getAlarmLlist() {
-//        final List<Alarm> alarmList=new ArrayList();
-//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("alarm_list");
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                try {
-//                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                        Alarm alarm= postSnapshot.getValue(Alarm.class);
-//                        alarmList.add(alarm);
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.w("aaa", "Error: ", databaseError.toException());
-//            }
-//        });
-//    }
-
     private void getAllUids(Map<String, String> uids) {
+        allUids = new ArrayList<>();
         for (Map.Entry<String, String> entry : uids.entrySet()) {
             String uid = entry.getValue();
-//            Log.d("aaa", uid);
-            DatabaseReference divRef = MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH);
-            divRef = divRef.child(uid);
-            divRef.addValueEventListener(workerChangedListener);
-
-//            divRef = MyFirebase.getInstance().getFdb().getReference(Constants.ASSIGNMENTS);
-//            divRef = divRef.child(uid);
-//            divRef.addValueEventListener(assignmentsListener);
-
-//            ValueEventListener eventListener = new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    Log.d("TAG", dataSnapshot.toString());
-//                    ArrayList<Assignment> list = new ArrayList<>();
-//                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                        Assignment title = ds.getValue(Assignment.class);
-//                        list.add(title);
-//                        Log.d("TAG", title.toString());
-//                    }
-//                    Worker tmp = new Worker();
-//                    tmp.setUid(uid);
-//                    workers.get(workers.indexOf(tmp)).setAssignments(list);
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//                }
-//            };
-//            MyFirebase.getInstance().getFdb().getReference(Constants.ASSIGNMENTS).child(uid).addValueEventListener(eventListener);
-
-//            getWorker(uid, Constants.WORKER_ID);
+            allUids.add(uid);
+            if(!uid.equals(manager.getUid())) {
+                Log.d("aaa", "the uid : " + uid);
+                DatabaseReference divRef = MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH);
+                divRef = divRef.child(uid);
+                divRef.addValueEventListener(workerChangedListener);
+            }
         }
     }
 
@@ -325,7 +287,8 @@ public class Fragment_Manager_Assignments extends MyFragment {
     }
 
     private void initViews() {
-        assignments = AssignmentMockDB.generateMovies();
+//        assignments = AssignmentMockDB.generateMovies();
+        assignments = manager.getAssignments();
         adapter_movie = new Adapter_AssignmentM(context, assignments);
 
         mDialog = new Dialog(context);
@@ -408,10 +371,13 @@ public class Fragment_Manager_Assignments extends MyFragment {
     }
 
     private void sendAssignmentToWorker(Assignment assignment, Worker selectedWorker) {
-        Log.d("aaa", selectedWorker.getAssignments().size() + "");
+//        Log.d("aaa", selectedWorker.getAssignments().size() + "");
+        manager.getAssignments().remove(assignment);
+        manager.setAssignmentsDoneAll(manager.getAssignmentsDoneAll() + 1);
+        manager.setAssignmentsDoneWeek(manager.getAssignmentsDoneWeek() + 1);
         selectedWorker.addAssignment(assignment);
         HashMap<String, Object> map = getAssignmentsMap(selectedWorker);
-        Log.d("aaa", selectedWorker.getAssignments().size() + "");
+//        Log.d("aaa", selectedWorker.getAssignments().size() + "");
 //        MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(selectedWorker.getUid()).child(Constants.ASSIGNMENTS).setValue(selectedWorker.getAssignments().get(0));
 //        MyFirebase.getInstance().getFdb().getReference(Constants.ASSIGNMENTS).child(selectedWorker.getUid()).setValue(selectedWorker.getAssignments()).addOnCompleteListener(new OnCompleteListener<Void>() {
         MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(selectedWorker.getUid()).setValue(selectedWorker).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -430,12 +396,13 @@ public class Fragment_Manager_Assignments extends MyFragment {
     }
 
     private void removeAssignment(Assignment assignment) {
-        int position = assignments.indexOf(assignment);
-        assignments.remove(assignment);
-        assignM_LST_assignments.removeViewAt(position);
-        adapter_movie.notifyItemRemoved(position);
-        adapter_movie.notifyItemRangeChanged(position, assignments.size());
-        adapter_movie.notifyDataSetChanged();
+        MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(manager.getUid()).setValue(manager);
+//        int position = assignments.indexOf(assignment);
+//        assignments.remove(assignment);
+//        assignM_LST_assignments.removeViewAt(position);
+//        adapter_movie.notifyItemRemoved(position);
+//        adapter_movie.notifyItemRangeChanged(position, assignments.size());
+//        adapter_movie.notifyDataSetChanged();
     }
 
     private List<String> getNames(ArrayList<Worker> workers) {

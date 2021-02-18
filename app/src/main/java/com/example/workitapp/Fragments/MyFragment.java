@@ -1,5 +1,6 @@
 package com.example.workitapp.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,15 @@ public class MyFragment extends Fragment {
         Glide
                 .with(this)
                 .load(id)
+                .fitCenter()
+                .into(view);
+    }
+
+    protected void setImage(String uri, ImageView view, Context context){
+        Glide
+                .with(context.getApplicationContext())
+                .load(uri)
+                .fitCenter()
                 .into(view);
     }
 }

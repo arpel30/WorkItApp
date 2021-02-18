@@ -29,13 +29,20 @@ import com.example.workitapp.Objects.MyFirebase;
 import com.example.workitapp.Objects.Worker;
 import com.example.workitapp.R;
 import com.github.drjacky.imagepicker.ImagePicker;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.UploadTask;
 import com.vaibhavlakhera.circularprogressview.CircularProgressView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Fragment_Profile extends Fragment {
+public class Fragment_Profile extends MyFragment {
 
     private View view;
     private Context context;
@@ -52,44 +59,48 @@ public class Fragment_Profile extends Fragment {
 
     private Worker w;
     private String myUri;
+    private ValueEventListener workerChanged;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
         context = view.getContext();
-        Log.d("aaa","find");
         findViews();
-        Log.d("aaa","find");
+        initListener();
         getWorkers();
-        Log.d("aaa","find");
-        initViews();
-        Log.d("aaa","find");
+//        initViews();
         return view;
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(w.getUid()).removeEventListener(workerChanged);
+    }
+
     private void getWorkers() {
-        w = new Worker("Moshe Levi", "moshelevi@gmail.com", "not", 12);
-        w.setAssignments(AssignmentMockDB.generateMovies());
+
+        FirebaseUser user = MyFirebase.getInstance().getUser();
+        String uid = null;
+        if (user != null)
+            uid = user.getUid();
+        if (uid != null) {
+            MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(uid).addValueEventListener(workerChanged);
+        }
+
+//        w = new Worker("Moshe Levi", "moshelevi@gmail.com", "not", 12);
+//        w.setAssignments(AssignmentMockDB.generateMovies());
     }
 
     private void initViews() {
-        MyFirebase.getInstance().getFst().getReference().child(Constants.PROFILE_FOLDER + "K5STDN1L6qNbSzcNV25VTRdCTIZ2.png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                myUri = uri.toString();
-                Glide.with(context)
-                        .load(myUri)
-                        .into(profile_IMG_pic);
-                Log.d("aaa", uri.toString());
-                // Got the download URL for 'users/me/profile.png'
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+        Log.d("aaa", "init : " + w.getImgUrl());
+        if (!w.getImgUrl().equals(Constants.DEFAULT))
+            setImage(w.getImgUrl(), profile_IMG_pic, context);
+        else
+            profile_IMG_pic.setImageResource(Constants.PROFILE_DEFAULT); // vector drawable
+//        header_LBL_email.setText(currentWorker.getEmail());
+//        header_LBL_name.setText(currentWorker.getName());
 
         profile_IMG_pic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,15 +109,21 @@ public class Fragment_Profile extends Fragment {
             }
         });
 
-        w.setAssignmentsDoneWeek(10);
-        w.setAssignmentsDoneAll(60);
+//        w.setAssignmentsDoneWeek(10);
+//        w.setAssignmentsDoneAll(60);
         int tasksLeft = w.getAssignments().size();
         profile_LBL_name.setText(w.getName());
         profile_LBL_email.setText(w.getEmail());
         profile_LBL_division.setText("Division : " + w.getDivisionID());
         profile_LBL_date.setText("Starting Date : " + w.getStartDate().toString());
-        profile_PRB_week.setProgress((int) ((w.getAssignmentsDoneWeek() * 100) / (w.getAssignmentsDoneWeek() + tasksLeft)), true);
-        profile_PRB_allTime.setProgress((int) ((w.getAssignmentsDoneAll() * 100) / (w.getAssignmentsDoneAll() + tasksLeft)), true);
+        if(tasksLeft == 0)
+        {
+            profile_PRB_week.setProgress(100, true);
+            profile_PRB_allTime.setProgress(100, true);
+        }else{
+            profile_PRB_week.setProgress((int) ((w.getAssignmentsDoneWeek() * 100) / (w.getAssignmentsDoneWeek() + tasksLeft)), true);
+            profile_PRB_allTime.setProgress((int) ((w.getAssignmentsDoneAll() * 100) / (w.getAssignmentsDoneAll() + tasksLeft)), true);
+        }
         profile_PRB_left.setTotal(tasksLeft);
         profile_PRB_left.setProgress(tasksLeft, true);
 //        (Activity_Base)getActivity().setIma
@@ -179,16 +196,57 @@ public class Fragment_Profile extends Fragment {
 //        }
     }
 
+    private void initListener() {
+        workerChanged = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                w = snapshot.getValue(Worker.class);
+//                showItems();
+//                Log.d("aaa", "listen : " + w.getImgUrl());
+                if(w.getIsAccepted())
+                    initViews();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             myUri = data.getData().toString();
-            Glide.with(context)
-                    .load(myUri)
-                    .into(profile_IMG_pic);
-            MyFirebase.getInstance().getFst().getReference(Constants.PROFILE_FOLDER + "123").putFile(data.getData());
+//            Glide.with(context)
+//                    .load(myUri)
+//                    .into(profile_IMG_pic);
+            MyFirebase.getInstance().getFst().getReference(Constants.PROFILE_FOLDER + w.getUid()).putFile(data.getData()).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    getUri();
+                }
+            });
         }
+    }
+
+    private void getUri() {
+        MyFirebase.getInstance().getFst().getReference().child(Constants.PROFILE_FOLDER + w.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                myUri = uri.toString();
+                MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(w.getUid()).child(Constants.IMG_URL).setValue(myUri);
+//                w.setImgUrl(myUri);
+                Log.d("aaa", "geturi : " + myUri);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
     }
 
     private void findViews() {
