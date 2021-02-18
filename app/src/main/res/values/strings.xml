@@ -37,4 +37,6 @@
     <string name="ASSIGNMENTS_BY_EMP">Assignments By Employee</string>
     <string name="DONE_NOTDONE">Done/Not Done</string>
     <string name="REQUEST_WAITING">Your Request Is Still\nWaiting For HR Approval</string>
+    <string name="TITLE">TITLE</string>
+    <string name="DESCRIPTION">Description</string>
 </resources>

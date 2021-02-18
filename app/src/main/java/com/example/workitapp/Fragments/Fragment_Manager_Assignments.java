@@ -32,6 +32,7 @@ import com.example.workitapp.Objects.Worker;
 import com.example.workitapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,6 +53,7 @@ public class Fragment_Manager_Assignments extends MyFragment {
     private Context context;
 
     private Dialog mDialog;
+    private Dialog newAssignmentDialog;
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("Workers");
@@ -88,8 +90,6 @@ public class Fragment_Manager_Assignments extends MyFragment {
         findViews();
         initListeners();
         getWorkers2();
-//        getWorkers();
-//        initViews();
         return view;
     }
 
@@ -292,6 +292,7 @@ public class Fragment_Manager_Assignments extends MyFragment {
         adapter_movie = new Adapter_AssignmentM(context, assignments);
 
         mDialog = new Dialog(context);
+        newAssignmentDialog = new Dialog(context);
 
         assignmentClickListener = new Adapter_AssignmentM.MyItemClickListener() {
             @Override
@@ -312,7 +313,7 @@ public class Fragment_Manager_Assignments extends MyFragment {
         assignM_BTN_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addAssignment();
+                newAssignment();
             }
         });
     }
@@ -343,6 +344,7 @@ public class Fragment_Manager_Assignments extends MyFragment {
         popupAM_BTN_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                saveManager();
                 mDialog.dismiss();
             }
         });
@@ -358,6 +360,42 @@ public class Fragment_Manager_Assignments extends MyFragment {
         });
         mDialog.show();
 
+    }
+
+    private void newAssignment() {
+        newAssignmentDialog.setContentView(R.layout.popup_new_assignment);
+        newAssignmentDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+        TextInputLayout popupNA_TIL_title = newAssignmentDialog.findViewById(R.id.popupNA_TIL_title);
+        TextInputLayout popupAW_LBL_description = newAssignmentDialog.findViewById(R.id.popupAW_LBL_description);
+        TextView popupNA_LBL_date = newAssignmentDialog.findViewById(R.id.popupNA_LBL_date);
+        Button popupNA_BTN_Add = newAssignmentDialog.findViewById(R.id.popupNA_BTN_Add);
+        Button popupNA_BTN_cancel = newAssignmentDialog.findViewById(R.id.popupNA_BTN_cancel);
+
+//        popupAM_LBL_date.setText(assignment.getDueTo().toString());
+        popupNA_BTN_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                saveManager();
+                newAssignmentDialog.dismiss();
+            }
+        });
+        popupNA_BTN_Add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                sendAssignmentToWorker(assignment, selectedWorker);
+//                removeAssignment(assignment);
+//                updateViews();
+//                Toast.makeText(context, selectedWorker.getName() + " will do " + assignment.getTitle(), Toast.LENGTH_SHORT).show();
+//                mDialog.dismiss();
+            }
+        });
+        newAssignmentDialog.show();
+
+    }
+
+    private void saveManager() {
+        manager.setAssignments(assignments);
+        MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(manager.getUid()).setValue(manager);
     }
 
     public HashMap<String, Object> getAssignmentsMap(Worker worker) {

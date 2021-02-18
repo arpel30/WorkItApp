@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="350dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/popup_bg"
+    android:layoutDirection="ltr">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/popupNA_TIL_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_margin="5dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:placeholderText="@string/TITLE"
+        app:placeholderTextColor="@color/DARK_GREY"
+        app:boxStrokeColor="@color/DARK_RED"
+        android:hint="@string/TITLE"
+        app:hintTextColor="@color/DARK_RED"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:lines="1"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="40dp"
+            android:textColor="@color/black"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/DARK_RED" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/popupAW_LBL_description"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:layout_marginTop="25dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:placeholderTextColor="@color/DARK_GREY"
+        app:placeholderText="@string/DESCRIPTION"
+        app:boxStrokeColor="@color/DARK_RED"
+        android:hint="@string/DESCRIPTION"
+        app:hintTextColor="@color/DARK_RED"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:ellipsize="end"
+            android:maxLength="100"
+            android:freezesText="true"
+            android:imeOptions="actionNext"
+            android:nextFocusDown="@null"
+            android:selectAllOnFocus="true"
+            android:maxLines="5"
+            android:inputType="textMultiLine"
+            android:textSize="20sp"
+            android:autoSizeMaxTextSize="25sp"
+            android:gravity="center"
+            android:autoSizeTextType="uniform"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/popupNA_LBL_date"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="20/2/2021"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_marginTop="18dp"
+        />
+    <LinearLayout
+        android:showDividers="middle"
+        android:divider="@drawable/white_divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        >
+
+        <Button
+            android:id="@+id/popupNA_BTN_Add"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ADD"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/LIGHT_GREY"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            />
+
+        <Button
+            android:id="@+id/popupNA_BTN_cancel"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/DARK_GREY"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
