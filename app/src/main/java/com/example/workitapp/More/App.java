@@ -9,8 +9,7 @@ public class App  extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         MySPV.init(this);
-        MyFirebase.init(this);
+        MyFirebase.init();
     }
 }

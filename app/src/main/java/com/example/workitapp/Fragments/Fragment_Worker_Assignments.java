@@ -17,10 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.workitapp.Adapter_AssignmentW;
-import com.example.workitapp.AssignmentMockDB;
+import com.example.workitapp.Adapters.Adapter_AssignmentW;
 import com.example.workitapp.More.Constants;
-import com.example.workitapp.More.MyCallBack;
 import com.example.workitapp.Objects.Assignment;
 import com.example.workitapp.Objects.MyFirebase;
 import com.example.workitapp.R;
@@ -48,14 +46,8 @@ public class Fragment_Worker_Assignments extends MyFragment {
     private Worker w;
     private ValueEventListener workerChanged;
 
-    private MyCallBack callBack;
-
     private ArrayList<Assignment> assignments;
     private Adapter_AssignmentW adapter_movie;
-
-    public void setCallBack(MyCallBack _callBack) {
-        this.callBack = _callBack;
-    }
 
     @Nullable
     @Override
@@ -65,8 +57,6 @@ public class Fragment_Worker_Assignments extends MyFragment {
         findViews();
         initListener();
         getWorkers();
-//        initViews();
-
         return view;
     }
 
@@ -77,7 +67,6 @@ public class Fragment_Worker_Assignments extends MyFragment {
     }
 
     private void getWorkers() {
-
         FirebaseUser user = MyFirebase.getInstance().getUser();
         String uid = null;
         if (user != null)
@@ -85,14 +74,10 @@ public class Fragment_Worker_Assignments extends MyFragment {
         if (uid != null) {
             MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(uid).addValueEventListener(workerChanged);
         }
-
-//        w = new Worker("Moshe Levi", "moshelevi@gmail.com", "not", 12);
-//        w.setAssignments(AssignmentMockDB.generateMovies());
     }
 
 
     private void initViews() {
-//        assignments = AssignmentMockDB.generateMovies();
         assignments = w.getAssignments();
         adapter_movie = new Adapter_AssignmentW(context, assignments);
 
@@ -104,13 +89,7 @@ public class Fragment_Worker_Assignments extends MyFragment {
                 Assignment tmpA = assignments.get(position);
                 openInfo(tmpA);
             }
-
-            @Override
-            public void onFinishAssignment(View view, Assignment assignment) {
-
-            }
         });
-
         assign_LST_assignments.setLayoutManager(new LinearLayoutManager(context));
         assign_LST_assignments.setAdapter(adapter_movie);
     }
@@ -120,14 +99,10 @@ public class Fragment_Worker_Assignments extends MyFragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 w = snapshot.getValue(Worker.class);
-//                showItems();
-//                Log.d("aaa", "listen : " + w.getImgUrl());
                 initViews();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         };
     }
@@ -142,12 +117,6 @@ public class Fragment_Worker_Assignments extends MyFragment {
     }
 
     private void openInfo(Assignment assignment) {
-//        new AlertDialog.Builder(context)
-//                .setTitle(assignment.getTitle() +" : " + assignment.getDueTo().toString())
-//                .setMessage(assignment.getDescription())
-//                .setPositiveButton("Close", null)
-//                .show();
-
         mDialog.setContentView(R.layout.popup_assignment_w);
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
         TextView popupAW_LBL_title = mDialog.findViewById(R.id.popupAW_LBL_title);
@@ -167,15 +136,12 @@ public class Fragment_Worker_Assignments extends MyFragment {
         popupAW_BTN_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                removeAssignment(assignment);
-//                w.getAssignments().remove(assignment);
                 finishAssignment(assignment);
                 Toast.makeText(context, "Mission " + assignment.getTitle() + " is done !", Toast.LENGTH_SHORT).show();
                 mDialog.dismiss();
             }
         });
         mDialog.show();
-
     }
 
     private void finishAssignment(Assignment assignment) {
@@ -186,10 +152,6 @@ public class Fragment_Worker_Assignments extends MyFragment {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-
-//                    Log.d("aaa", selectedWorker.getAssignments().size() + "");
-//                    getWorkers2();
-//                    removeAssignment(assignment);
                 } else {
                     Toast.makeText(context, "Cannot Assign.", Toast.LENGTH_SHORT).show();
                 }
@@ -201,7 +163,4 @@ public class Fragment_Worker_Assignments extends MyFragment {
     private void findViews() {
         assign_LST_assignments = view.findViewById(R.id.assign_LST_assignments);
     }
-
-
-
 }

@@ -55,19 +55,6 @@ public class Fragment_Unauthorized extends MyFragment{
         MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(worker.getUid()).removeEventListener(workerChangedListener);
     }
 
-    @Override
-    protected void removeListeners() {
-//        MyFirebase.getInstance().getFdb().getReference().removeEventListener(workerChangedListener);
-//        MyFirebase.getInstance().getFdb().getReference().removeEventListener(managerChangedListener);
-//        MyFirebase.getInstance().getFdb().getReference().removeEventListener(divisionChangedListener);
-    }
-
-    private void initListeners() {
-//        initListener();
-//        initManagerListener();
-//        initDivisionListener();
-    }
-
     private void getWorker() {
         FirebaseUser user = MyFirebase.getInstance().getUser();
         String uid = null;
@@ -83,19 +70,17 @@ public class Fragment_Unauthorized extends MyFragment{
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 worker = snapshot.getValue(Worker.class);
-//                showItems();
-//                Log.d("aaa", "listen : " + w.getImgUrl());
                 initViews();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         };
     }
 
     private void initViews() {
         unauth_LBL_name.setText(Constants.UNAUTH_TEXT + worker.getName());
+        setImage(Constants.MEME_IMG, unauth_IMG_meme);
+
     }
 }

@@ -23,23 +23,17 @@ public class MyFirebase {
     private static MyFirebase instance;
     private FirebaseAuth auth;
     private FirebaseDatabase fdb;
-    private FirebaseUser user;
     private FirebaseStorage fst;
-    private ArrayList<Worker> workers;
-    private Worker worker;
 
-
-    private MyFirebase(Context context) {
+    private MyFirebase() {
         fdb = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         fst = FirebaseStorage.getInstance();
-        if (auth != null)
-            user = auth.getCurrentUser();
     }
 
-    public static void init(Context context) {
+    public static void init() {
         if (instance == null) {
-            instance = new MyFirebase(context.getApplicationContext());
+            instance = new MyFirebase();
         }
     }
 

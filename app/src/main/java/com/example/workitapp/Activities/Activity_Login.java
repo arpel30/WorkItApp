@@ -34,16 +34,12 @@ public class Activity_Login extends Activity_Base {
     private CheckBox login_CBX_remember;
 
     private FirebaseAuth auth;
-    private DatabaseReference ref;
-    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         rememberedCheck();
-
         findViews();
         initViews();
     }
@@ -52,7 +48,6 @@ public class Activity_Login extends Activity_Base {
         if(MySPV.getInstance().getBool(Constants.REMEMBER)) {
             Intent i = new Intent(Activity_Login.this, Activity_Main.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            Log.d("aaa", "Log - rememberd.");
             startActivity(i);
             finish();
         }
@@ -84,7 +79,6 @@ public class Activity_Login extends Activity_Base {
         Toast.makeText(Activity_Login.this, "Login Successfully.", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(Activity_Login.this, Activity_Main.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        Log.d("aaa", "Log - logged in.");
         startActivity(i);
         finish();
     }
@@ -93,7 +87,6 @@ public class Activity_Login extends Activity_Base {
         if(login_CBX_remember.isChecked()){
             MySPV.getInstance().putBool(Constants.REMEMBER, true);
             MySPV.getInstance().putString(Constants.UID, FirebaseAuth.getInstance().getCurrentUser().getUid());
-            Log.d("aaa", "log - "+FirebaseAuth.getInstance().getCurrentUser().getUid());
         }
     }
 
@@ -104,23 +97,21 @@ public class Activity_Login extends Activity_Base {
 
     private void initViews() {
         auth = FirebaseAuth.getInstance();
-
         login_LBL_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(getBaseContext(), "Request has been sent", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(Activity_Login.this, Activity_Request.class);
                 startActivity(i);
                 finish();
             }
         });
-
         login_BTN_sign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 login();
             }
         });
+        setImage(Constants.LOGO_WHITE, login_IMG_icon);
     }
 
     private void findViews() {
@@ -130,10 +121,5 @@ public class Activity_Login extends Activity_Base {
         login_TIL_password = findViewById(R.id.login_TIL_password);
         login_CBX_remember = findViewById(R.id.login_CBX_remember);
         login_IMG_icon = findViewById(R.id.login_IMG_icon);
-    }
-
-
-    public void requestToast(View view) {
-        Toast.makeText(getBaseContext(), "Request has been sent", Toast.LENGTH_SHORT).show();
     }
 }

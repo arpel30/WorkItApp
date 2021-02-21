@@ -26,4 +26,6 @@ public class Constants {
     public static final int PROFILE_DEFAULT = R.drawable.profile_icon;
     public static final String IMG_URL = "imgUrl";
     public static final String UNAUTH_TEXT = "Sorry, ";
+    public static final int LOGO_WHITE = R.drawable.logo_white;
+    public static final int MEME_IMG = R.drawable.unauth_pic;
 }

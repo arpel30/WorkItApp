@@ -3,7 +3,6 @@ package com.example.workitapp.Fragments;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.workitapp.Adapter_Statistics;
+import com.example.workitapp.Adapters.Adapter_Statistics;
 import com.example.workitapp.More.CompareByAssignmentsDoneWeekly;
 import com.example.workitapp.More.Constants;
-import com.example.workitapp.More.MyCallBack;
-import com.example.workitapp.Objects.Manager;
 import com.example.workitapp.Objects.MyFirebase;
 import com.example.workitapp.R;
 import com.example.workitapp.Objects.Worker;
@@ -57,10 +54,7 @@ public class Fragment_Statistics extends MyFragment {
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("Workers");
-    private Worker w;
     private Worker manager;
-
-    private MyCallBack callBack;
 
     private Adapter_Statistics adapter_statistics;
     private ArrayList<Worker> workers = new ArrayList<>();
@@ -71,10 +65,6 @@ public class Fragment_Statistics extends MyFragment {
 
     ArrayList<String> allUids;
 
-    public void setCallBack(MyCallBack _callBack) {
-        this.callBack = _callBack;
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,13 +73,6 @@ public class Fragment_Statistics extends MyFragment {
         findViews();
         initListeners();
         getWorkers2();
-//        workers = new ArrayList<>();
-//        Log.d("aaa", workers.toString());
-//        getWorker("oj1ySRivKKX3rze9s5IyyKGOkrg2");
-//        Log.d("aaa", workers.toString());
-//        getDivision(1);
-//        workers.sort(new CompareByAssignmentsDoneWeekly());
-//        initViews();
         return view;
     }
 
@@ -120,12 +103,6 @@ public class Fragment_Statistics extends MyFragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 workers = new ArrayList<>();
                 getAllUids((Map<String, String>) snapshot.getValue());
-                Log.d("aaa", "hello");
-//                String[] uids = snapshot.getValue(String[].class);
-//                Log.d("aaa", uids.toString());
-//                for (String uid : uids) {
-//                    getWorker(uid);
-//                }
             }
 
             @Override
@@ -144,7 +121,6 @@ public class Fragment_Statistics extends MyFragment {
                     tmpW.setAssignments(new ArrayList<>());
                 getDivision(tmpW.getDivisionID());
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -158,20 +134,15 @@ public class Fragment_Statistics extends MyFragment {
                 Worker tmpW = snapshot.getValue(Worker.class);
                 if (tmpW.getAssignments() == null)
                     tmpW.setAssignments(new ArrayList<>());
-//                Log.d("aaa", "uid : " + tmpW.getUid());
                 if (!workers.contains(tmpW)) {
-                    Log.d("aaa", "not Contains " + tmpW.getName());
-//                    workers.remove(tmpW);
                     workers.add(tmpW);
                 } else {
                     workers.remove(tmpW);
-                    Log.d("aaa", "Contains " + tmpW.getName());
                     workers.add(tmpW);
                 }
                 workers.sort(new CompareByAssignmentsDoneWeekly());
                 initViews();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -182,13 +153,10 @@ public class Fragment_Statistics extends MyFragment {
         user = MyFirebase.getInstance().getUser();
         if (user != null) {
             getManager(user.getUid(), Constants.MANAGER_ID);
-//            workers = new ArrayList<>();
-//            getDivision(manager.getDivisionID());
         }
     }
 
     public void getDivision(int division) {
-//        workers = new ArrayList<>();
         DatabaseReference divRef = MyFirebase.getInstance().getFdb().getReference(Constants.DIVISION_PATH);
         divRef = divRef.child(division + "");
         divRef.addValueEventListener(divisionChangedListener);
@@ -199,60 +167,20 @@ public class Fragment_Statistics extends MyFragment {
         for (Map.Entry<String, String> entry : uids.entrySet()) {
             String uid = entry.getValue();
             allUids.add(uid);
-//            Log.d("aaa", uid);
             DatabaseReference divRef = MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH);
             divRef = divRef.child(uid);
             divRef.addValueEventListener(workerChangedListener);
-//            getWorker(uid, Constants.WORKER_ID);
         }
     }
 
     // type 0-manager, 1 worker
     public void getManager(String uid, int type) {
-//        final Worker[] worker = new Worker[1];
         DatabaseReference divRef = MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH);
         divRef = divRef.child(uid);
         divRef.addValueEventListener(managerChangedListener);
-//        return worker[0];
-    }
-
-    private void getWorkers() {
-        Worker tmpW = new Worker();
-        tmpW.setName("Shlomo");
-        workers.add(tmpW);
-
-        tmpW = new Worker();
-        tmpW.setName("Tal");
-        workers.add(tmpW);
-
-        tmpW = new Worker();
-        tmpW.setName("Booki");
-        workers.add(tmpW);
-
-        tmpW = new Worker();
-        tmpW.setName("Neria");
-        workers.add(tmpW);
-
-        tmpW = new Worker();
-        tmpW.setName("Arad");
-        workers.add(tmpW);
-
-        tmpW = new Worker();
-        tmpW.setName("levi");
-        workers.add(tmpW);
-
-        tmpW = new Worker();
-        tmpW.setName("avi");
-        workers.add(tmpW);
-
-        tmpW = new Worker();
-        tmpW.setName("adam");
-        workers.add(tmpW);
     }
 
     private void initViews() {
-//        workers = AssignmentMockDB.generateReqs();
-//        Log.d("aaa", workers.toString());
         adapter_statistics = new Adapter_Statistics(context, workers);
 
         adapter_statistics.setClickListener(new Adapter_Statistics.MyItemClickListener() {
@@ -277,18 +205,12 @@ public class Fragment_Statistics extends MyFragment {
         for (int i = 0; i < workers.size(); i++) {
             xAxisLables.add(workers.get(i).getName());
         }
-
-//        ArrayList<String> names = (ArrayList<String>) getNames(workers);
         XAxis xAxis = stats_BCH_chart.getXAxis();
         xAxis.setGranularityEnabled(true);
         xAxis.setGranularity(1f);
-//        xAxis.setCenterAxisLabels(true);
-//        xAxis.setLabelRotationAngle(-90);
         stats_BCH_chart.setVisibleXRangeMaximum(7);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisLables));
         stats_BCH_chart.invalidate();
-//        (String[]) getNames(workers).toArray()
-
     }
 
     private void getParams() {
@@ -301,12 +223,11 @@ public class Fragment_Statistics extends MyFragment {
             left += worker.getAssignments().size();
         }
         profile_PRB_left.setTotal(left);
-        profile_PRB_allTime.setTotal(allTime * 100);
-        profile_PRB_week.setTotal(week * 100 + 1000);
+        profile_PRB_allTime.setTotal(allTime+left);
+        profile_PRB_week.setTotal(week+left);
         profile_PRB_left.setProgress(left, true);
-        profile_PRB_allTime.setProgress(allTime * 40, true);
-        profile_PRB_week.setProgress(week * 90, true);
-
+        profile_PRB_allTime.setProgress(allTime, true);
+        profile_PRB_week.setProgress(week, true);
     }
 
     public ArrayList<String> getNamesLabels() {
@@ -341,7 +262,5 @@ public class Fragment_Statistics extends MyFragment {
         profile_PRB_allTime = view.findViewById(R.id.profile_PRB_allTime);
         profile_PRB_week = view.findViewById(R.id.profile_PRB_week);
         profile_PRB_left = view.findViewById(R.id.profile_PRB_left);
-
     }
-
 }

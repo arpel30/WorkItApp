@@ -34,7 +34,6 @@ public class Activity_Request extends Activity_Base {
     private Button request_BTN_send;
     private TextView request_LBL_signIn;
 
-    private OnCompleteListener requestCompleteListener;
     private FirebaseAuth auth;
     private DatabaseReference ref;
 
@@ -60,17 +59,14 @@ public class Activity_Request extends Activity_Base {
                                 w.setUid(uid);
                                 clearText();
 
-//                                ref = MyFirebase.getInstance().getFdb().getReference();
-                                ref = FirebaseDatabase.getInstance().getReference();
+                                ref = MyFirebase.getInstance().getFdb().getReference();
                                 ref.child(Constants.REQUESTS_PATH).child(uid).setValue(new Request(uid));
                                 ref.child(Constants.WORKER_PATH).child(uid).setValue(w).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
                                             Toast.makeText(getBaseContext(), "Request has been sent.", Toast.LENGTH_SHORT).show();
-//                                        Toast.makeText(Activity_Request.this, "Request has been sent.", Toast.LENGTH_SHORT).show();
                                             Log.d("aaa", "Req - Request has been sent.");
-//                                            FirebaseAuth auth = FirebaseAuth.getInstance();
                                             if (auth != null) {
                                                 FirebaseUser user = auth.getCurrentUser();
                                                 auth.signOut();
@@ -97,15 +93,8 @@ public class Activity_Request extends Activity_Base {
         request_TIL_division.getEditText().getText().clear();
     }
 
-//    private HashMap<String, Worker> getWorkerHashMap(Worker w, String uid) {
-//        HashMap<String, Worker> workerMap = new HashMap<>();
-//        workerMap.put(uid, w);
-//        return workerMap;
-//    }
-
     private void initViews() {
-        auth = FirebaseAuth.getInstance();
-
+        auth = MyFirebase.getInstance().getAuth();
         request_BTN_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

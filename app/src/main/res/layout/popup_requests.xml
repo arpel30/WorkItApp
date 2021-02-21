@@ -24,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:lines="1"
-        android:text="TITLE"
         android:layout_margin="5dp"
         android:textSize="30sp"
         android:autoSizeTextType="uniform"
@@ -79,7 +78,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:text="moshepelled11@gmail.com"
             android:lines="1"
             android:autoSizeTextType="uniform"
             android:autoSizeMaxTextSize="25sp"
@@ -124,7 +122,6 @@
             android:autoSizeTextType="uniform"
             android:autoSizeMaxTextSize="25sp"
             android:autoSizeMinTextSize="10sp"
-            android:text="20"
             android:textSize="25sp"
             android:textColor="@color/black"
             />
@@ -164,7 +161,6 @@
         android:autoSizeTextType="uniform"
         android:autoSizeMaxTextSize="25sp"
         android:autoSizeMinTextSize="10sp"
-        android:text="20/2/2021"
         android:textSize="25sp"
         android:textColor="@color/black"
         />

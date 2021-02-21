@@ -45,7 +45,6 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
 
     private androidx.appcompat.widget.Toolbar main_TLB_toolbar;
     private FrameLayout main_FRL_container;
-    Worker w = new Worker("Arad Pelled", "ap@gmail.com", "aklaksk", 20);
     private Worker currentWorker;
 
     @Override
@@ -53,14 +52,11 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // init w from firebase
         findViews();
         initListener();
         getWorker();
         setSupportActionBar(main_TLB_toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        // hide or show items
-//        showItems
         hideItems();
 
         main_NAV_navigation.bringToFront();
@@ -69,19 +65,11 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         toggle.syncState();
         main_NAV_navigation.setNavigationItemSelectedListener(this);
 
-        // show home only if the app start now
         if (savedInstanceState == null) {
             main_NAV_navigation.setCheckedItem(R.id.menu_ITM_home);
             getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Profile()).commit();
-//                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Statistics()).commit();
         }
     }
-
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        MyFirebase.getInstance().getFdb().getReference().removeEventListener(workerChanged);
-//    }
 
     private void initListener() {
         workerChanged = new ValueEventListener() {
@@ -89,13 +77,10 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 currentWorker = snapshot.getValue(Worker.class);
                 showItems();
-                Log.d("aaa", "Main : " + currentWorker.getUid());
                 initViews();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         };
     }
@@ -114,7 +99,6 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         if (currentWorker != null) {
             hideItems();
             if (currentWorker.getIsAccepted()) {
-//                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Profile()).commitAllowingStateLoss();
                 switch (currentWorker.getType()) {
                     case Constants.MANAGER_ID:
                         menu.findItem(R.id.menu_ITM_stats).setVisible(true);
@@ -131,12 +115,10 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
                         menu.findItem(R.id.menu_ITM_profile).setVisible(true);
                         break;
                 }
-//                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Profile()).commit();
             } else {
                 getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Unauthorized()).commitAllowingStateLoss();
             }
         }
-//        menu.findItem(R.id.menu_ITM_login).setVisible(false);
     }
 
     private void initViews() {
@@ -187,15 +169,9 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
 
     private void openFragment(MenuItem item) {
         if (!currentWorker.getIsAccepted()) {
-
         }
-
         switch (item.getItemId()) {
             case R.id.menu_ITM_home:
-//                getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Statistics()).commit();
-//                Intent i = new Intent(Activity_Main.this, Activity_Unauthorized.class);
-//                startActivity(i);
-//                finish();
                 getSupportFragmentManager().beginTransaction().replace(main_FRL_container.getId(), new Fragment_Manager_Assignments()).commit();
                 break;
             case R.id.menu_ITM_stats:
@@ -226,9 +202,7 @@ public class Activity_Main extends Activity_Base implements NavigationView.OnNav
         if (auth != null) {
             FirebaseUser user = auth.getCurrentUser();
             auth.signOut();
-            Log.d("aaa", "Signed Out.");
-        } else
-            Log.d("aaa", "Didn't Signed Out.");
+        }
         MySPV.getInstance().putBool(Constants.REMEMBER, false);
         MySPV.getInstance().removeKey(Constants.UID);
         Intent i = new Intent(Activity_Main.this, Activity_Login.class);

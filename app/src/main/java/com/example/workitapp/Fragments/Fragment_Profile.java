@@ -2,28 +2,21 @@ package com.example.workitapp.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.example.workitapp.Activities.Activity_Base;
-import com.example.workitapp.AssignmentMockDB;
 import com.example.workitapp.More.Constants;
 import com.example.workitapp.Objects.MyFirebase;
 import com.example.workitapp.Objects.Worker;
@@ -56,7 +49,6 @@ public class Fragment_Profile extends MyFragment {
     private CircularProgressView profile_PRB_allTime;
     private CircularProgressView profile_PRB_left;
 
-
     private Worker w;
     private String myUri;
     private ValueEventListener workerChanged;
@@ -69,7 +61,6 @@ public class Fragment_Profile extends MyFragment {
         findViews();
         initListener();
         getWorkers();
-//        initViews();
         return view;
     }
 
@@ -88,9 +79,6 @@ public class Fragment_Profile extends MyFragment {
         if (uid != null) {
             MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(uid).addValueEventListener(workerChanged);
         }
-
-//        w = new Worker("Moshe Levi", "moshelevi@gmail.com", "not", 12);
-//        w.setAssignments(AssignmentMockDB.generateMovies());
     }
 
     private void initViews() {
@@ -99,9 +87,6 @@ public class Fragment_Profile extends MyFragment {
             setImage(w.getImgUrl(), profile_IMG_pic, context);
         else
             profile_IMG_pic.setImageResource(Constants.PROFILE_DEFAULT); // vector drawable
-//        header_LBL_email.setText(currentWorker.getEmail());
-//        header_LBL_name.setText(currentWorker.getName());
-
         profile_IMG_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,8 +94,6 @@ public class Fragment_Profile extends MyFragment {
             }
         });
 
-//        w.setAssignmentsDoneWeek(10);
-//        w.setAssignmentsDoneAll(60);
         int tasksLeft = w.getAssignments().size();
         profile_LBL_name.setText(w.getName());
         profile_LBL_email.setText(w.getEmail());
@@ -126,7 +109,6 @@ public class Fragment_Profile extends MyFragment {
         }
         profile_PRB_left.setTotal(tasksLeft);
         profile_PRB_left.setProgress(tasksLeft, true);
-//        (Activity_Base)getActivity().setIma
     }
 
     public int checkPermissions() {
@@ -181,19 +163,6 @@ public class Fragment_Profile extends MyFragment {
                         .start();
                 break;
         }
-//        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//            requestPermissions(new String[]{Manifest.permission.CAMERA}, Constants.MY_CAMERA_REQUEST_CODE);
-//        } else {
-//            permissions = 1;
-//            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constants.READ_EXTERNAL_STORAGE_CODE);
-//            } else {
-//                ImagePicker.Companion.with(this)
-//                        .cropOval()
-//                        .compress(200)
-//                        .start();
-//            }
-//        }
     }
 
     private void initListener() {
@@ -201,15 +170,11 @@ public class Fragment_Profile extends MyFragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 w = snapshot.getValue(Worker.class);
-//                showItems();
-//                Log.d("aaa", "listen : " + w.getImgUrl());
                 if(w.getIsAccepted())
                     initViews();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         };
     }
@@ -219,9 +184,6 @@ public class Fragment_Profile extends MyFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             myUri = data.getData().toString();
-//            Glide.with(context)
-//                    .load(myUri)
-//                    .into(profile_IMG_pic);
             MyFirebase.getInstance().getFst().getReference(Constants.PROFILE_FOLDER + w.getUid()).putFile(data.getData()).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
@@ -237,14 +199,10 @@ public class Fragment_Profile extends MyFragment {
             public void onSuccess(Uri uri) {
                 myUri = uri.toString();
                 MyFirebase.getInstance().getFdb().getReference(Constants.WORKER_PATH).child(w.getUid()).child(Constants.IMG_URL).setValue(myUri);
-//                w.setImgUrl(myUri);
-                Log.d("aaa", "geturi : " + myUri);
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
             }
         });
     }
@@ -259,5 +217,4 @@ public class Fragment_Profile extends MyFragment {
         profile_PRB_allTime = view.findViewById(R.id.profile_PRB_allTime);
         profile_PRB_left = view.findViewById(R.id.profile_PRB_left);
     }
-
 }

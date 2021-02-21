@@ -9,7 +9,6 @@ import java.util.Date;
 
 public class Assignment {
     String title;
-//    SimpleDateFormat format;
     String dueTo;
     String description;
 
@@ -18,7 +17,6 @@ public class Assignment {
 
     public Assignment(String title, String  dueTo, String description) {
         this.title = title;
-//        this.format = new SimpleDateFormat("dd/MM/yy");;
         this.dueTo = dueTo;
         this.description = description;
     }
@@ -26,14 +24,9 @@ public class Assignment {
 
     public Assignment(String title, LocalDate  dueTo, String description) {
         this.title = title;
-//        this.format = new SimpleDateFormat("dd/MM/yy");;
         this.dueTo = dueTo.toString();
         this.description = description;
     }
-
-//    public SimpleDateFormat getFormat() {
-//        return format;
-//    }
 
 
     @Override

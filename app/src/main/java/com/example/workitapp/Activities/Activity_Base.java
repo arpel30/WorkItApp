@@ -20,16 +20,13 @@ public abstract class Activity_Base extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getWindow().setStatusBarColor(Color.parseColor("#990F02"));
-//        getWindow().setNavigationBarColor(Color.parseColor("#990F02"));
-        MyScreenUtils.hideSystemUI(this);
+        MyScreenUtils.setThemeColor(this);
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
-//            MyScreenUtils.hideSystemUI(this);
         }
     }
 
@@ -47,7 +44,6 @@ public abstract class Activity_Base extends AppCompatActivity {
             else {
                 Toast.makeText(this, "Tap back button again to exit", Toast.LENGTH_SHORT).show();
             }
-
             mBackPressed = System.currentTimeMillis();
         } else {
             super.onBackPressed();
@@ -76,7 +72,6 @@ public abstract class Activity_Base extends AppCompatActivity {
         } catch (NoSuchAlgorithmException e) {
             return password;
         }
-
     }
 
     public void setImage(int id, ImageView view) {
@@ -95,5 +90,4 @@ public abstract class Activity_Base extends AppCompatActivity {
                 .fitCenter()
                 .into(view);
     }
-
 }
