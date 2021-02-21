@@ -7,27 +7,29 @@ Workers Management App.
 - HR Worker
 - Manager
 
-# All the users have their own profile & side bar
-## profile
+# Every user have his own profile page & side bar
+![WorkItApp_profile](https://user-images.githubusercontent.com/48724924/108636569-d012c080-748e-11eb-9aed-9cfe15b809f9.jpg)
+![WorkItApp_sidebar](https://user-images.githubusercontent.com/48724924/108636565-cb4e0c80-748e-11eb-8aae-e9a46b4f062e.jpg)
+
+Side bar is determined by user type (Worker/HR/Manager).
 
 
-## side bar
-
-Determined by user type (Worker/HR/Manager).
-
-<br>
-# Each End-user have a different interface for his own permissions & options
+## Each End-user have a different interface for his own permissions & options
 
 ## Worker 
 ### Track assignments and do them
+![WorkItApp_assignments](https://user-images.githubusercontent.com/48724924/108636626-2d0e7680-748f-11eb-9eb4-529f18b564ef.jpg)
+![WorkItApp_doAssignment](https://user-images.githubusercontent.com/48724924/108636634-339cee00-748f-11eb-9ffb-0e7294c12d76.jpg)
 
 ## HR Worker
 ### Approve or Decline new workers requests
+![WorkItApp_request](https://user-images.githubusercontent.com/48724924/108636646-3f88b000-748f-11eb-9064-479fb8d8483d.jpg)
 
 ## Manager
 
-### Create a new assignment
-
-### Assign an assignment to a worker
+### Create new assignment & Assign to one of his workers
+![WorkItApp_newAssignment](https://user-images.githubusercontent.com/48724924/108636639-3992cf00-748f-11eb-851b-cdef3e0c6f34.jpg)
+![WorkItApp_assign](https://user-images.githubusercontent.com/48724924/108636615-1536f280-748f-11eb-8e9e-883be2926866.jpg)
 
 ### Watch workers performance
+![WorkItApp_stats](https://user-images.githubusercontent.com/48724924/108636651-44e5fa80-748f-11eb-9add-04578451a08a.jpg)
