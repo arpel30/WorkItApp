@@ -7,6 +7,19 @@ Workers Management App.
 - HR Worker
 - Manager
 
+# First of all, there are Sign-In & Register options
+![sign_in](https://user-images.githubusercontent.com/48724924/110105039-91470980-7db0-11eb-9a9c-577a2a03df6f.jpg)
+![request](https://user-images.githubusercontent.com/48724924/110105053-94da9080-7db0-11eb-9bf2-824edcbc0044.jpg)
+
+New workers need to send an HR request to get access to the system.
+
+## Unauthorized Worker 
+![unauth_worker](https://user-images.githubusercontent.com/48724924/110105314-e7b44800-7db0-11eb-95b4-c6cada8d5083.jpg)
+
+## Authorized Worker
+![auth_worker](https://user-images.githubusercontent.com/48724924/110105328-ebe06580-7db0-11eb-9a1f-8d97bde10ba0.jpg)
+
+
 # Every user have his own profile page & side bar
 ![WorkItApp_profile](https://user-images.githubusercontent.com/48724924/108636569-d012c080-748e-11eb-9aed-9cfe15b809f9.jpg)
 ![WorkItApp_sidebar](https://user-images.githubusercontent.com/48724924/108636565-cb4e0c80-748e-11eb-8aae-e9a46b4f062e.jpg)
