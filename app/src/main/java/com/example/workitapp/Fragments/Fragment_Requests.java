@@ -181,7 +181,7 @@ public class Fragment_Requests extends MyFragment {
         popupRequest_BTN_approve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, tmp.getName() + "Approved !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, tmp.getName() + " Approved !", Toast.LENGTH_SHORT).show();
                 answerReq(r.getUid(), true, r, tmp.getDivisionID());
                 mDialog.dismiss();
             }
@@ -189,7 +189,7 @@ public class Fragment_Requests extends MyFragment {
         popupRequest_BTN_decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, tmp.getName() + "Declined.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, tmp.getName() + " Declined.", Toast.LENGTH_SHORT).show();
                 answerReq(r.getUid(), false, r, tmp.getDivisionID());
                 mDialog.dismiss();
             }
