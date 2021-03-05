@@ -10,9 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WorkItApp">
-        <activity android:name=".Activities.Activity_Main" />
-        <activity android:name=".Activities.Activity_Request" />
-        <activity android:name=".Activities.Activity_Login">
+        <activity android:name=".Activities.Activity_Main"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.Activity_Request"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.Activity_Login"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

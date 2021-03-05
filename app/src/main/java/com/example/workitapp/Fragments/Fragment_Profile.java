@@ -44,6 +44,7 @@ public class Fragment_Profile extends MyFragment {
     private TextView profile_LBL_name;
     private TextView profile_LBL_email;
     private TextView profile_LBL_division;
+    private TextView profile_LBL_position;
     private TextView profile_LBL_date;
     private CircularProgressView profile_PRB_week;
     private CircularProgressView profile_PRB_allTime;
@@ -97,18 +98,28 @@ public class Fragment_Profile extends MyFragment {
         int tasksLeft = w.getAssignments().size();
         profile_LBL_name.setText(w.getName());
         profile_LBL_email.setText(w.getEmail());
+        profile_LBL_position.setText(getPosition(w.getType()));
         profile_LBL_division.setText("Division : " + w.getDivisionID());
         profile_LBL_date.setText("Starting Date : " + w.getStartDate().toString());
-        if(tasksLeft == 0)
-        {
+        if (tasksLeft == 0) {
             profile_PRB_week.setProgress(100, true);
             profile_PRB_allTime.setProgress(100, true);
-        }else{
+        } else {
             profile_PRB_week.setProgress((int) ((w.getAssignmentsDoneWeek() * 100) / (w.getAssignmentsDoneWeek() + tasksLeft)), true);
             profile_PRB_allTime.setProgress((int) ((w.getAssignmentsDoneAll() * 100) / (w.getAssignmentsDoneAll() + tasksLeft)), true);
         }
         profile_PRB_left.setTotal(tasksLeft);
         profile_PRB_left.setProgress(tasksLeft, true);
+    }
+
+    private String getPosition(int type) {
+        switch (type) {
+            case Constants.MANAGER_ID:
+                return "Manager";
+            case Constants.HR_ID:
+                return "HR Worker";
+        }
+        return "Worker";
     }
 
     public int checkPermissions() {
@@ -170,9 +181,10 @@ public class Fragment_Profile extends MyFragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 w = snapshot.getValue(Worker.class);
-                if(w.getIsAccepted())
+                if (w.getIsAccepted())
                     initViews();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -216,5 +228,6 @@ public class Fragment_Profile extends MyFragment {
         profile_PRB_week = view.findViewById(R.id.profile_PRB_week);
         profile_PRB_allTime = view.findViewById(R.id.profile_PRB_allTime);
         profile_PRB_left = view.findViewById(R.id.profile_PRB_left);
+        profile_LBL_position = view.findViewById(R.id.profile_LBL_position);
     }
 }
